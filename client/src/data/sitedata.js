@@ -11,7 +11,23 @@ import image8 from '../../media/images/project8.jpg';
 import image9 from '../../media/images/project9.jpg';
 import image10 from '../../media/images/project10.jpg';
 
+import note1 from '../../notes/lorem_ipsum_test.md';
+
 export const projects = [
+  {
+    id: 'lorem-ipsum-dolor',
+    title: 'Lorem ipsum dolor sit amet, long title for a blog post',
+    tags: [TAG.NOTE],
+    description:
+      'Sometimes it can be good just to write a few lines about the note',
+    published_at: '10/05/2020',
+    template: TEMPLATE.NOTE,
+    content: note1,
+    thumbnail: {
+      background: '#f2f2f2',
+      pattern: 'stripes',
+    },
+  },
   {
     id: 'triangular-mesh',
     image: image10,

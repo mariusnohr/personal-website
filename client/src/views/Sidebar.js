@@ -76,6 +76,8 @@ class Sidebar {
       if (el.getAttribute('data-id') === id) el.classList.add('active');
       else el.classList.remove('active');
     });
+
+    if (id === 'about' || id === 'resume') this.setActiveFilter(null);
   }
 
   setActiveFilter(id) {

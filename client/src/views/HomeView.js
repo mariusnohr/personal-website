@@ -51,6 +51,8 @@ export default class HomeView extends View {
     const projectId = param?.projectId;
     const tag = param?.tag;
 
+    console.log('PARAM CAHNGE', projectId);
+
     if (this.projectPage) {
       this.projectPage.destroy();
       this.projectPage = null;

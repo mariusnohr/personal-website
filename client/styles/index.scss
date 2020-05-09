@@ -1,4 +1,5 @@
 @import 'easing';
+@import 'screensize';
 
 * {
   margin: 0;
@@ -169,15 +170,21 @@ ul {
   
   .item, .grid-sizer {
     display: block;
-    width: 33.3%;
+    width: 20%;
+    @include large {
+      width: 33.3%;
+    }
+    @include medium {
+      width: 50%;
+    }
+    @include small {
+      width: 100%;
+    }
   }
 
   .item {
     overflow: hidden;
     perspective: 700px;
-    background: #f2f2f2;
-    min-height: 30%;
-    z-index: 0;
 
     img {
       width: 100%;
@@ -187,13 +194,16 @@ ul {
     }
 
     &:hover {
-      z-index: 1;
       img {
         transition: transform 0.35s $ease-out-back;
         transform: scale(1.15);
       }
     }
   }
+
+  .note {
+    height: 30vh;
+  }  
 
   .project-iframe {
     position: fixed;
@@ -204,6 +214,13 @@ ul {
       width: 100%;
       height: 100%;
     }
+  }
+
+  .project-note {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    background: #efefef;
   }
 }
 
@@ -241,6 +258,7 @@ h3 {
   }
   
   a {
+    display: inline-block;
     text-decoration: none;
     background: #eee;
     color: currentColor;
@@ -259,5 +277,14 @@ h3 {
       content: '–';
       margin-right: 0.5em;
     }
+  }
+}
+
+.about .content {
+  #interactivity {
+    transform-origin: top right;
+  }
+  #physics {
+    transform-origin: bottom left;
   }
 }

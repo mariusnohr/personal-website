@@ -15,9 +15,38 @@ export default class ProjectPage {
         this.createIframeTemplate(project, target);
         break;
 
+      case TEMPLATE.NOTE:
+        console.log('we have a note');
+        this.createNoteTemplate(project, target);
+
       default:
         break;
     }
+  }
+
+  createNoteTemplate(project, target) {
+    const { title, content } = project;
+    const container = document.createElement('div');
+    const contentContainer = document.createElement('div');
+    const h1 = document.createElement('h1');
+
+    h1.textContent = title;
+    container.classList.add('content');
+    container.appendChild(h1);
+    container.appendChild(contentContainer);
+
+    // add content
+    contentContainer.innerHTML = content;
+
+    this.el = document.createElement('div');
+    this.el.classList.add('project-note');
+    this.el.appendChild(container);
+
+    target.appendChild(this.el);
+
+    console.log('crated');
+
+    gsap.from(this.el, { duration: 0.3, opacity: 0 });
   }
 
   createIframeTemplate(project, target) {
