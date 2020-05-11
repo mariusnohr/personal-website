@@ -1,5 +1,6 @@
 import { router } from '../framework/App';
 import { TEMPLATE } from '../config/constants';
+import noteIcon from '../icons/memo.js';
 
 export default class GridItem {
   constructor({ project, target, isotope }) {
@@ -44,8 +45,13 @@ export default class GridItem {
 
     // add bg to note
     if (obj.template === TEMPLATE.NOTE) {
-      const { background } = obj.thumbnail;
+      const { background, theme } = obj.thumbnail;
+      const iconContainer = document.createElement('div');
+      iconContainer.classList.add('icon');
       container.style.background = background;
+      iconContainer.innerHTML = noteIcon;
+      iconContainer.classList.add(theme);
+      container.appendChild(iconContainer);
     }
 
     return container;

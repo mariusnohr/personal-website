@@ -62,9 +62,8 @@ export default class HomeView extends View {
 
     if (projectId) {
       const project = projects.find((project) => project.id === projectId);
-      const { title, description, published_at } = project;
       this.projectPage = new ProjectPage(project, this.el);
-      Sidebar.showSidebar(title, description, published_at);
+      Sidebar.showSidebar(project);
       webgl.openProject();
     }
 

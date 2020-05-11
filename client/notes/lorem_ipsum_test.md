@@ -1,5 +1,3 @@
-# README #
-
 This README would normally document whatever steps are necessary to get your application up and running.
 
 ### What is this repository for? ###
@@ -27,3 +25,14 @@ This README would normally document whatever steps are necessary to get your app
 
 * Repo owner or admin
 * Other community or team contact
+
+```
+this.iso = new Isotope(msnryContainer, {
+  // options
+  percentPosition: true,
+  itemSelector: '.item',
+  columnWidth: '.grid-sizer',
+  stagger: 50,
+});
+this.createGridItems(msnryContainer, this.iso);
+```

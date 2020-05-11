@@ -1,4 +1,8 @@
 import gsap from 'gsap';
+import { TEMPLATE } from '../config/constants';
+import backIcon from '../icons/back';
+import clockIcon from '../icons/clock';
+import { router } from '../framework/App';
 
 const NAV_IN_DELAY = 0.5;
 
@@ -27,23 +31,49 @@ class Sidebar {
     });
   }
 
-  showSidebar(title, description, date) {
+  showSidebar(project) {
+    const { title, description, published_at, template } = project;
+
     this.nav.classList.add('hide');
     this.sidebarEl = document.createElement('div');
-
-    const h3 = document.createElement('h3');
-    const p = document.createElement('p');
-    const dateEl = document.createElement('p');
-
-    dateEl.classList.add('publish-date');
-    h3.textContent = title;
-    p.textContent = description;
-    dateEl.textContent = date;
-
     this.sidebarEl.classList.add('sidebar');
-    this.sidebarEl.appendChild(h3);
-    this.sidebarEl.appendChild(p);
+
+    if (template === TEMPLATE.NOTE) {
+      const { content } = project;
+      const len = content.split(' ').length;
+      const readingTime = Math.ceil(len / 200);
+      const clockEl = document.createElement('div');
+      const label = document.createElement('span');
+      clockEl.innerHTML = clockIcon;
+      clockEl.appendChild(label);
+      clockEl.classList.add('time');
+      label.textContent = `${readingTime} minute read`;
+      this.sidebarEl.appendChild(clockEl);
+    } else {
+      const h3 = document.createElement('h3');
+      const p = document.createElement('p');
+
+      h3.textContent = title;
+      p.textContent = description;
+
+      this.sidebarEl.appendChild(h3);
+      this.sidebarEl.appendChild(p);
+    }
+
+    // date
+    const dateEl = document.createElement('p');
+    dateEl.classList.add('publish-date');
+    dateEl.textContent = published_at;
     this.sidebarEl.appendChild(dateEl);
+
+    // back button
+    const backBtn = document.createElement('button');
+    backBtn.innerHTML = backIcon;
+    backBtn.classList.add('back-btn');
+    this.sidebarEl.appendChild(backBtn);
+    backBtn.addEventListener('click', () => {
+      router.navigate('/');
+    });
 
     this.el.appendChild(this.sidebarEl);
 

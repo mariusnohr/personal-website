@@ -153,6 +153,54 @@ aside {
       font-family: 'Playfair';
       font-weight: 900;
     }
+
+    .time {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      font-size: 1rem;
+      svg {
+        display: block;
+        width: 25px;
+        height: 25px;
+        margin-right: 5px;
+      }
+    }
+
+    .back-btn {
+      width: 40px;
+      height: 40px;
+      border: 3px solid black;
+      border-radius: 50%;
+      position: relative;
+      &:after {
+        content: 'BACK';
+        position: absolute;
+        display: block;
+        top: 8px;
+        left: 45px;
+        font-size: 1rem;
+        font-weight: 700;
+        opacity: 0;
+        transform: translateX(5px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        pointer-events: none;
+      }
+      svg {
+        display: block;
+        transition: transform 0.25s ease;
+      }
+
+      &:hover {
+        svg {
+          transform: scale(1.2);
+        }
+        &:after {
+          opacity: 1;
+          transform: translateX(0px);
+        }
+      }
+    }
   }
 }
 
@@ -184,7 +232,7 @@ ul {
 
   .item {
     overflow: hidden;
-    perspective: 700px;
+    // perspective: 700px;
 
     img {
       width: 100%;
@@ -193,8 +241,54 @@ ul {
       backface-visibility: hidden;
     }
 
+    .icon {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: transform 0.25s ease-out;
+
+      &:before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0.05;
+      }
+
+      svg {
+        width: 40%;
+        opacity: 0.6;
+        // fill: white;
+      }
+
+      &.light {
+        svg {
+          fill: white;
+        }
+
+        &:before {
+          background: url('../media/images/hexagon-black.png') center center;
+          background-size: 20% auto;
+        }
+      }
+
+      &.dark {
+        svg {
+          fill: black;
+        }
+
+        &:before {
+          background: url('../media/images/hexagon-white.png') center center;
+          background-size: 20% auto;
+        }
+      }
+    }
+
     &:hover {
-      img {
+      img, .icon {
         transition: transform 0.35s $ease-out-back;
         transform: scale(1.15);
       }
@@ -220,7 +314,28 @@ ul {
     position: absolute;
     top: 0;
     width: 100%;
-    background: #efefef;
+    min-height: 100%;
+    background: #f8f8f8;
+    padding: 60px;
+
+    .content {
+      width: 100%;
+      max-width: 850px;
+
+      li {
+        &:before {
+          content: '–';
+          margin-right: 0.5em;
+        }
+      }
+    }
+
+    a {
+      color: currentColor;
+      &:hover {
+        text-decoration: none;
+      }
+    }
   }
 }
 
@@ -249,6 +364,11 @@ h3 {
   font-size: 1.8rem;
   margin-bottom: 1rem;
   margin-top: 1rem;
+}
+
+pre, code {
+  font-size: 1.4rem;
+  margin-bottom: 2rem;
 }
 
 .view {

@@ -18,13 +18,12 @@ export const projects = [
     id: 'lorem-ipsum-dolor',
     title: 'Lorem ipsum dolor sit amet, long title for a blog post',
     tags: [TAG.NOTE],
-    description:
-      'Sometimes it can be good just to write a few lines about the note',
     published_at: '10/05/2020',
     template: TEMPLATE.NOTE,
     content: note1,
     thumbnail: {
-      background: '#f2f2f2',
+      theme: 'dark',
+      background: '#8e8699',
       pattern: 'stripes',
     },
   },
