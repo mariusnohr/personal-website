@@ -10,10 +10,26 @@ import image7 from '../../media/images/project7.jpg';
 import image8 from '../../media/images/project8.jpg';
 import image9 from '../../media/images/project9.jpg';
 import image10 from '../../media/images/project10.jpg';
+import image11 from '../../media/images/project11.jpg';
 
 import note1 from '../../notes/lorem_ipsum_test.md';
 
 export const projects = [
+  {
+    id: 'noise-blob',
+    image: image11,
+    assetType: ASSET_TYPE.IMAGE,
+    title: 'Noise Blob II',
+    tags: [TAG.SKETCH, TAG.INTERACTIVE],
+    published_at: '20/05/2020',
+    description:
+      'This one was a combination of several different experiments. Including shadow maps, mouse picking and extending a PBR shader with reflections.',
+    template: TEMPLATE.IFRAME,
+    background: '#f2f2f2',
+    data: {
+      src: '/sketches/noise_blob',
+    },
+  },
   {
     id: 'lorem-ipsum-dolor',
     title: 'Lorem ipsum dolor sit amet, long title for a blog post',
@@ -22,9 +38,8 @@ export const projects = [
     template: TEMPLATE.NOTE,
     content: note1,
     thumbnail: {
-      theme: 'dark',
+      theme: 'dark five',
       background: '#8e8699',
-      pattern: 'stripes',
     },
   },
   {

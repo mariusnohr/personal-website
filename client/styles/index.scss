@@ -57,6 +57,17 @@ aside {
   justify-content: center;
   max-width: 300px;
 
+  .logo {
+    position: fixed;
+    display: block;
+    width: 30%;
+    height: 15vw;
+    min-height: 230px;
+    max-height: 250px;
+    top: 0;
+    max-width: 300px;
+  }
+
   nav {
     position: fixed;
     padding: 30px;
@@ -67,6 +78,46 @@ aside {
       opacity: 0;
       visibility: hidden;
     }
+
+    a {
+      display: inline-block;
+      color: currentColor;
+      text-decoration: none;
+      padding: 6px 12px;
+      position: relative;
+      transition: color 0.35s ease-out;
+      font-size: 1rem;
+      line-height: 1em;
+
+      &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 2px;
+        left: 0;
+        width: 100%;
+        height: calc(100% - 4px);
+        background: black;
+        transform: scaleX(0);
+        transition: transform 0.35s ease-out;
+        transform-origin: top left;
+        z-index: -1;
+      }
+
+      &.inactive {
+        color: #999;
+      }
+
+      &:hover, &.active {
+        color: white;
+
+        &:before {
+          // transform-origin: top left;
+          transition: transform 0.35s $ease-out-back;
+          transform: scaleX(1);
+        }
+      }
+    }
   }
 
   ul {
@@ -76,46 +127,6 @@ aside {
     margin: 15px auto;
     li {
       line-height: 1em;
-    }
-  }
-
-  a {
-    display: inline-block;
-    color: currentColor;
-    text-decoration: none;
-    padding: 6px 12px;
-    position: relative;
-    transition: color 0.35s ease-out;
-    font-size: 1rem;
-    line-height: 1em;
-
-    &:before {
-      content: '';
-      display: block;
-      position: absolute;
-      top: 2px;
-      left: 0;
-      width: 100%;
-      height: calc(100% - 4px);
-      background: black;
-      transform: scaleX(0);
-      transition: transform 0.35s ease-out;
-      transform-origin: top left;
-      z-index: -1;
-    }
-
-    &.inactive {
-      color: #999;
-    }
-
-    &:hover, &.active {
-      color: white;
-
-      &:before {
-        // transform-origin: top left;
-        transition: transform 0.35s $ease-out-back;
-        transform: scaleX(1);
-      }
     }
   }
 
@@ -231,7 +242,7 @@ ul {
   }
 
   .item {
-    overflow: hidden;
+    // overflow: hidden;
     // perspective: 700px;
 
     img {
@@ -239,6 +250,52 @@ ul {
       display: block;
       transition: transform 0.25s ease-out;
       backface-visibility: hidden;
+    }
+
+    .content-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .title {
+      position: absolute;
+      bottom: 40px;
+      left: -15px;
+      z-index: 1;
+      background: rgba(black, 0.9);
+      padding: 15px;
+      max-width: 80%;
+      overflow: hidden;
+      transform: scaleX(0);
+      // opacity: 0;
+      transform-origin: center left;
+      transition: transform 0.2s $ease-in-out-cubic 0.1s;
+
+      h4 {
+        color: #ccc;
+        font-size: 0.85rem;
+        margin-bottom: 8px;
+        font-weight: 500;
+        text-transform: uppercase;
+        line-height: 1.45em;
+        opacity: 0;
+        transition: opacity 0.25s ease 0s;
+      }
+
+      span {
+        display: inline-flex;
+        background: rgba(white, 0.1);
+        margin-right: 5px;
+        padding: 2px 4px;
+        text-transform: uppercase;
+        border-radius: 3px;
+        font-size: 0.5rem;
+        color: #aaa;
+        opacity: 0;
+        transition: opacity 0.25s ease 0.1s;
+      }
     }
 
     .icon {
@@ -255,23 +312,16 @@ ul {
         position: absolute;
         width: 100%;
         height: 100%;
-        opacity: 0.05;
       }
 
       svg {
         width: 40%;
         opacity: 0.6;
-        // fill: white;
       }
 
       &.light {
         svg {
           fill: white;
-        }
-
-        &:before {
-          background: url('../media/images/hexagon-black.png') center center;
-          background-size: 20% auto;
         }
       }
 
@@ -279,10 +329,71 @@ ul {
         svg {
           fill: black;
         }
+      }
 
+      &.one {
         &:before {
-          background: url('../media/images/hexagon-white.png') center center;
-          background-size: 20% auto;
+          background: url('../media/images/back-pattern.png') center center;
+        }
+      }
+
+      &.two {
+        &:before {
+          background: url('../media/images/black-twill.png') center center;
+          opacity: 0.2;
+        }
+      }
+
+      &.three {
+        &:before {
+          background: url('../media/images/bright-squares.png') center center;
+        }
+      }
+
+      &.four {
+        &:before {
+          background: url('../media/images/carbon-fibre-big.png') center center;
+          opacity: 0.1;
+        }
+      }
+
+      &.five {
+        &:before {
+          background: url('../media/images/cartographer.png') center center;
+          opacity: 0.8;
+        }
+      }
+
+      &.six {
+        &:before {
+          background: url('../media/images/checkered-light-emboss.png') center center;
+        }
+      }
+
+      &.seven {
+        &:before {
+          background: url('../media/images/cream-pixels.png') center center;
+        }
+      }
+
+      &.eight {
+        &:before {
+          background: url('../media/images/cubes.png') center center;
+          opacity: 0.8;
+        }
+      }
+
+      &.nine {
+        &:before {
+          background: url('../media/images/diamonds.png') center center;
+          opacity: 0.6;
+        }
+      }
+
+      &.ten {
+        &:before {
+          background: url('../media/images/hexellence.png') center center;
+          opacity: 0.75;
         }
       }
     }
@@ -291,6 +402,21 @@ ul {
       img, .icon {
         transition: transform 0.35s $ease-out-back;
         transform: scale(1.15);
+      }
+
+      .title {
+        transform: scaleX(1) scaleY(1);
+        // opacity: 1;
+        transition: transform 0.2s $ease-out-cubic 0s, opacity 0.2s ease 0s;
+        h4 {
+          opacity: 1;
+          transition: opacity 0.25s ease 0.15s;
+          // transition: opacity 0.3s ease, transform 0.3s ease-out;
+        }
+        span {
+          opacity: 1;
+          transition: opacity 0.25s ease 0.2s;
+        }
       }
     }
   }
@@ -302,6 +428,7 @@ ul {
   .project-iframe {
     position: fixed;
     top: 0;
+    z-index: 2;
 
     iframe {
       border: none;
@@ -315,8 +442,9 @@ ul {
     top: 0;
     width: 100%;
     min-height: 100%;
-    background: #f8f8f8;
+    background: #fbfbfb;
     padding: 60px;
+    z-index: 2;
 
     .content {
       width: 100%;
@@ -335,6 +463,11 @@ ul {
       &:hover {
         text-decoration: none;
       }
+    }
+
+    .hljs {
+      padding: 1.8rem;
+      border-radius: 12px;
     }
   }
 }

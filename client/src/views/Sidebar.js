@@ -3,6 +3,7 @@ import { TEMPLATE } from '../config/constants';
 import backIcon from '../icons/back';
 import clockIcon from '../icons/clock';
 import { router } from '../framework/App';
+import * as webgl from '../webgl/main';
 
 const NAV_IN_DELAY = 0.5;
 
@@ -12,8 +13,17 @@ class Sidebar {
     this.nav = this.el.querySelector('nav');
     this.navButtons = this.nav.querySelectorAll('a');
     this.filterButtons = this.nav.querySelectorAll('.filter-menu a');
-    this.sidebarEl = null;
+    this.logo = this.el.querySelector('.logo');
 
+    this.logo.addEventListener('mouseover', () => {
+      webgl.logoHover(true);
+    });
+
+    this.logo.addEventListener('mouseout', () => {
+      webgl.logoHover(false);
+    });
+
+    this.sidebarEl = null;
     this.animateNav();
   }
 

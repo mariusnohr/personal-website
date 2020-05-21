@@ -3,8 +3,9 @@ import { TEMPLATE } from '../config/constants';
 
 import hljs from 'highlight.js/lib/core';
 import javascript from 'highlight.js/lib/languages/javascript';
+import 'highlight.js/styles/hybrid.css';
+
 hljs.registerLanguage('javascript', javascript);
-import 'highlight.js/styles/github.css';
 
 export default class ProjectPage {
   constructor(project, target) {

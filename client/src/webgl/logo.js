@@ -70,7 +70,7 @@ export function mouseover() {
       ease: 'elastic.out',
     });
 
-    document.body.classList.add('mouseover');
+    // document.body.classList.add('mouseover');
   }
 }
 
@@ -92,7 +92,7 @@ export function mouseout() {
       ease: 'elastic.out',
     });
 
-    document.body.classList.remove('mouseover');
+    // document.body.classList.remove('mouseover');
   }
 }
 

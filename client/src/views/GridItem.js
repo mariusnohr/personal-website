@@ -18,12 +18,16 @@ export default class GridItem {
   }
 
   createItem(obj, target, onClick, onComplete) {
-    const { tags, id, image } = obj;
+    const { tags, id, image, title } = obj;
     const container = document.createElement('a');
     const classes = tags.map((tag) => tag.toLowerCase());
     container.classList.add('item', ...classes);
     container.setAttribute('href', `/project/${id}`);
     container.setAttribute('data-route', '');
+
+    const contentContainer = document.createElement('div');
+    contentContainer.classList.add('content-container');
+    container.appendChild(contentContainer);
 
     // load image
     if (image) {
@@ -32,7 +36,8 @@ export default class GridItem {
         onComplete(container);
       };
       img.src = image;
-      container.appendChild(img);
+
+      contentContainer.appendChild(img);
       // manually override click listener since
       // the element is added after the image has loaded
       // thus the router doesn't detect it immediately
@@ -50,9 +55,24 @@ export default class GridItem {
       iconContainer.classList.add('icon');
       container.style.background = background;
       iconContainer.innerHTML = noteIcon;
-      iconContainer.classList.add(theme);
-      container.appendChild(iconContainer);
+      iconContainer.classList.add(...theme.split(' '));
+      contentContainer.appendChild(iconContainer);
     }
+
+    // add tags and title
+    const titleContainer = document.createElement('div');
+    const h4 = document.createElement('h4');
+    h4.textContent = title;
+    titleContainer.classList.add('title');
+    titleContainer.appendChild(h4);
+    container.appendChild(titleContainer);
+
+    tags.forEach((tag) => {
+      const span = document.createElement('span');
+      span.classList.add('tag');
+      span.textContent = tag;
+      titleContainer.appendChild(span);
+    });
 
     return container;
   }

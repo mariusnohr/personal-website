@@ -25,8 +25,8 @@ function animate() {
   // update time
   time += 0.01;
 
-  // raycast
-  raycast();
+  // // raycast
+  // raycast();
 
   // update logo
   logo.update();
@@ -73,6 +73,11 @@ function onResize() {
   camera.aspect = width / height;
   camera.updateProjectionMatrix();
   renderer.setSize(width, height);
+}
+
+export function logoHover(toggle) {
+  if (toggle) logo.mouseover();
+  else logo.mouseout();
 }
 
 export function openProject() {
