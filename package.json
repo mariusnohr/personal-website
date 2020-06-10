@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "copy-projects": "cp -a ./sketches/. ./public/sketches",
-    "dev": "parcel watch client/templates/layout.html -d public",
+    "dev": "parcel client/templates/index.html -d public",
     "prebuild": "npm run clean",
     "clean": "rm -rf ./public && rm -rf .cache",
-    "build": "parcel build client/templates/layout.html -d public",
-    "start": "node server/server.js",
+    "build": "parcel build client/templates/index.html -d public",
+    "start": "npm run dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

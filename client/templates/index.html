@@ -1,5 +1,47 @@
-<div class="project-container">
-  <div class="masonry-container">
-    <div class="grid-sizer"></div>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <title>Marius Nohr – Creative Developer</title>
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair+Display:900,900i">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700">
+  <link rel="stylesheet" href="../styles/index.scss">
+
+  <meta property="og:url" content="" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="" />
+  <meta property="og:description" content="" />
+  <meta property="og:image" content="" />
+</head>
+
+<body>
+  <canvas id="canvas"></canvas>
+  <div class="wrapper">
+    <aside>
+      <a class="logo" href="/" data-route></a>
+      <nav class="menu">
+        <ul class="filter-menu">
+          <li><a href="/tag/sketch" data-id="sketch" data-route>Sketch</a></li>
+          <li><a href="/tag/interactive" data-id="interactive" data-route>Interactive</a></li>
+          <li><a href="/tag/generative" data-id="generative" data-route>Generative</a></li>
+          <li><a href="/tag/memo" data-id="memo" data-route>Memo</a></li>
+          <!-- <li><a href="/tag/penplot" data-id="penplot" data-route>Penplot</a></li> -->
+          <!-- <li><a href="/tag/case-study" data-id="case-study" data-route>Case Study</a></li> -->
+          <!-- <li><a href="/tag/music" data-id="music" data-route>Music</a></li> -->
+        </ul>
+        <ul>
+          <li><a href="/resume" data-id="resume" data-route>Resume</a></li>
+          <li><a href="/about" data-id="about" data-route>About</a></li>
+        </ul>
+      </nav>
+    </aside>
+    <div id="app"></div>
   </div>
-</div>
+  <script src="../src/index.js"></script>
+</body>
+
+</html>

@@ -7,7 +7,7 @@ import AboutView from './views/AboutView';
 import Sidebar from './views/Sidebar';
 
 // templates
-import indexTemplate from '../templates/index.html';
+import mainTemplate from '../templates/main.html';
 import resumeTemplate from '../templates/resume.html';
 import aboutTemplate from '../templates/about.html';
 import notFoundTemplate from '../templates/404.html';
@@ -41,19 +41,19 @@ function init() {
       index: {
         className: 'home-page',
         path: '/',
-        template: indexTemplate,
+        template: mainTemplate,
         component: HomeView,
       },
       tag: {
         className: 'tag-page',
         path: '/tag/:tag',
-        template: indexTemplate,
+        template: mainTemplate,
         component: HomeView,
       },
       project: {
         className: 'project-page',
         path: '/project/:projectId',
-        template: indexTemplate,
+        template: mainTemplate,
         component: HomeView,
       },
       resume: {
