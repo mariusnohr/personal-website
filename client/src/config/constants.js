@@ -6,7 +6,7 @@ export const ANSWER_API_URL = '/api/answer';
 export const TAG = {
   SKETCH: 'Sketch',
   MUSIC: 'Music',
-  NOTE: 'Note',
+  MEMO: 'Memo',
   GENERATIVE: 'Generative',
   INTERACTIVE: 'Interactive',
   PENPLOT: 'Penplot',

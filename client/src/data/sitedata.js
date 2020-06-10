@@ -11,10 +11,36 @@ import image8 from '../../media/images/project8.jpg';
 import image9 from '../../media/images/project9.jpg';
 import image10 from '../../media/images/project10.jpg';
 import image11 from '../../media/images/project11.jpg';
+import image12 from '../../media/images/project12.jpg';
 
-import note1 from '../../notes/lorem_ipsum_test.md';
+import note1 from '../../notes/the-magic-easing.md';
+
+// TAGS
+//
+// SKETCH: 'Sketch',
+// MUSIC: 'Music',
+// MEMO: 'Memo',
+// GENERATIVE: 'Generative',
+// INTERACTIVE: 'Interactive',
+// PENPLOT: 'Penplot',
+// CASE_STUDY: 'Case Study',
 
 export const projects = [
+  {
+    id: 'animated-vector-fields',
+    image: image12,
+    assetType: ASSET_TYPE.IMAGE,
+    title: 'Animated Vector Fields',
+    tags: [TAG.SKETCH],
+    published_at: '09/06/2020',
+    description:
+      "This was my first attempt to create vector flow fields. The principle is quite simple; create an n by n grid and place a vector inside it where the direction it's poiting is calculated based on a noise value. I also added some animation to it by using time as the third component in regular simplex 3D noise. Open up settings with Shift + D. Lower the resolution of the grid if your CPU is melting. Should probably be done on the GPU for better perf.",
+    template: TEMPLATE.IFRAME,
+    background: '#092a41',
+    data: {
+      src: '/sketches/animated_vector_fields',
+    },
+  },
   {
     id: 'noise-blob',
     image: image11,
@@ -31,9 +57,9 @@ export const projects = [
     },
   },
   {
-    id: 'lorem-ipsum-dolor',
-    title: 'Lorem ipsum dolor sit amet, long title for a blog post',
-    tags: [TAG.NOTE],
+    id: 'the-magic-easing-equation',
+    title: 'The magic smoothing equation',
+    tags: [TAG.MEMO],
     published_at: '10/05/2020',
     template: TEMPLATE.NOTE,
     content: note1,
@@ -80,7 +106,7 @@ export const projects = [
     tags: [TAG.SKETCH, TAG.GENERATIVE],
     published_at: '11/10/2019',
     description:
-      'Strange attractors mixed with some simplex noise. Click to generate a new one. Hit Shift + D to bring up the debug panel.',
+      'Strange attractors mixed with some simplex noise. Click to generate a new one. Hit Shift + D to bring up the debug panel. Should probably make some high dpi prints out of these some days.',
     template: TEMPLATE.IFRAME,
     background: '#0d0d0d',
     data: {

@@ -128,5 +128,5 @@ export function init(location) {
   time = 0;
 
   // start engine
-  // start();
+  start();
 }
