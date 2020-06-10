@@ -27,6 +27,8 @@ for (let i = 0; i < 30; i++) {
 }
 ```
 
+
+
 The numbers we get looks somewhat like this:
 ```
 20
