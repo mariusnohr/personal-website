@@ -6,7 +6,7 @@ const fs = require('fs');
 const app = new Koa();
 const router = new Router();
 
-const LAYOUT_FILE = './public/layout.html';
+const LAYOUT_FILE = './public/index.html';
 
 const routes = {
   index: '/',
