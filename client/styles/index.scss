@@ -56,6 +56,11 @@ aside {
   align-items: center;
   justify-content: center;
   max-width: 300px;
+  opacity: 0;
+
+  &.show {
+    opacity: 1;
+  }
 
   .logo {
     position: fixed;
@@ -245,6 +250,9 @@ ul {
     // overflow: hidden;
     // perspective: 700px;
 
+    // opacity: 0;
+    // transform: scale(0.5);
+
     img {
       width: 100%;
       display: block;
@@ -399,6 +407,7 @@ ul {
     }
 
     &:hover {
+      z-index: 1;
       img, .icon {
         transition: transform 0.35s $ease-out-back;
         transform: scale(1.15);

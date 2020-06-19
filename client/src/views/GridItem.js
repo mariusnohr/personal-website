@@ -3,16 +3,14 @@ import { TEMPLATE } from '../config/constants';
 import noteIcon from '../icons/memo.js';
 
 export default class GridItem {
-  constructor({ project, target, isotope }) {
-    const onComplete = (el) => {
-      isotope.insert(el);
-    };
+  constructor({ project, target, onCreated, onLoaded }) {
     const onClick = (evt, el) => {
       evt.preventDefault();
       const href = el.getAttribute('href');
-      router.navigate(href);
+      // router.navigate(href);
     };
-    const el = this.createItem(project, target, onClick, onComplete);
+
+    onCreated(this.createItem(project, target, onClick, onLoaded));
 
     // observer.observe(el);
   }
@@ -28,25 +26,6 @@ export default class GridItem {
     const contentContainer = document.createElement('div');
     contentContainer.classList.add('content-container');
     container.appendChild(contentContainer);
-
-    // load image
-    if (image) {
-      const img = new Image();
-      img.onload = () => {
-        onComplete(container);
-      };
-      img.src = image;
-
-      contentContainer.appendChild(img);
-      // manually override click listener since
-      // the element is added after the image has loaded
-      // thus the router doesn't detect it immediately
-      container.addEventListener('click', (evt) => {
-        onClick(evt, container);
-      });
-    } else {
-      onComplete(container);
-    }
 
     // add bg to note
     if (obj.template === TEMPLATE.NOTE) {
@@ -73,6 +52,25 @@ export default class GridItem {
       span.textContent = tag;
       titleContainer.appendChild(span);
     });
+
+    // load image
+    if (image) {
+      const img = new Image();
+      img.onload = () => {
+        onComplete(container);
+      };
+      img.src = image;
+
+      contentContainer.appendChild(img);
+      // manually override click listener since
+      // the element is added after the image has loaded
+      // thus the router doesn't detect it immediately
+      container.addEventListener('click', (evt) => {
+        onClick(evt, container);
+      });
+    } else {
+      onComplete(container);
+    }
 
     return container;
   }

@@ -30,11 +30,11 @@ export const projects = [
     id: 'animated-vector-fields',
     image: image12,
     assetType: ASSET_TYPE.IMAGE,
-    title: 'Animated Vector Fields',
+    title: 'Animated Vector Field',
     tags: [TAG.SKETCH],
     published_at: '09/06/2020',
     description:
-      "This was my first attempt to create vector flow fields. The principle is quite simple; create an n by n grid and place a vector inside it where the direction it's poiting is calculated based on a noise value. I also added some animation to it by using time as the third component in regular simplex 3D noise. Open up settings with Shift + D. Lower the resolution of the grid if your CPU is melting. Should probably be done on the GPU for better perf.",
+      "This was my first attempt to create a vector flow field. The principle is quite simple; create an n by n grid and place a vector inside it where the direction it's poiting is calculated based on a noise value. I also added some animation to it by using time as the third component in regular simplex 3D noise. Open up settings with Shift + D. Lower the resolution of the grid if your CPU is melting. Should probably be done on the GPU for better perf.",
     template: TEMPLATE.IFRAME,
     background: '#092a41',
     data: {

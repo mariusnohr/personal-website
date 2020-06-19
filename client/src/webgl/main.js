@@ -36,14 +36,17 @@ function animate() {
 }
 
 function start() {
-  isAnimating = true;
-  animate();
+  if (!isAnimating) {
+    isAnimating = true;
+    animate();
+  }
 }
 
 function stop() {
   isAnimating = false;
 }
 
+// currently not in use
 function raycast() {
   // do raycast
   const mouseNDC = interactions.getMouse().ndc;
@@ -76,16 +79,26 @@ function onResize() {
 }
 
 export function logoHover(toggle) {
-  if (toggle) logo.mouseover();
-  else logo.mouseout();
+  if (toggle) {
+    start();
+    logo.mouseover();
+  } else {
+    // stop when out anim is complete
+    logo.mouseout((active) => {
+      if (!active) stop();
+    }, isAnimating);
+  }
 }
 
 export function openProject() {
-  logo.setInactive();
+  logo.toggleActive(false, () => {
+    stop();
+  });
 }
 
 export function closeProject() {
-  logo.setActive();
+  start();
+  logo.toggleActive(true);
 }
 
 export function init(location) {
@@ -104,7 +117,8 @@ export function init(location) {
 
   renderer = new THREE.WebGLRenderer({
     canvas: document.querySelector('#canvas'),
-    antialias: true,
+    antialias: false,
+    powerPreference: 'high-performance',
   });
 
   renderer.setPixelRatio(window.devicePixelRatio);

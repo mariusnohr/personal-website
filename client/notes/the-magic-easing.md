@@ -1,17 +1,23 @@
-I remember one of the fist things I learned in this crazy web world of interactivity and animation many years ago, was that whatever I was working on, it would almost always look or feel better whenever I applied this simple awesome little trick to some interactive parts of my project. Usually in the render/update loops:
+I remember one of the fist things I learned when I first started out with coding and animation, was this nice little equation:
 
 ```
-// instad of just setting the new value with no animation
+// instad of just setting the new value 
+// with no animation, like this
 value = newValue
-// we can set the position smoothly over time
-value += (newValue - value) / easingFactor
+// we can increment the value 
+// smoothly over time
+value += (newValue - value) * easingFactor
 ```
 
-When I found out about this I was a little stoked to say the least. It's really simple, but it can make the animation and feel of things much more smooth and elegant. I guess you could remove the word "magic" from the headline, beacause it turns out it's wasn't anything magic going on afterall. It sure *felt* a bit magic to me least.
+The principle is pretty simple. Instead of setting the value directly, we make the increments smaller and smaller as we apporach our target. This can make the movement feel a lot more organic. Whether it's about animating some position property or some user interaction.
+
+I guess there's no need to have the word "magic" in the headline, as there's not really anything magic going on here. It sure *felt* a little magic the first time I discovered it though.
+
+This post is a tribute to this little piece of code.
 
 ### To elaborate a little
 
-The calculation is pretty simple. We also get a good look at what's happening if we output some numbers. Let's run it 30 times (or 30 frames if you like):
+The calculation is pretty simple. We can also get a good look at what's happening if we output some numbers. Let's run it 30 times (or 30 frames if you like):
 
 ```
 // set an initial value of 0
@@ -19,10 +25,10 @@ let value = 0
 // the new value should be 100
 let newValue = 100
 // we set our "easingFactor" variable to 5
-let easingFactor = 5
-
+let easingFactor = 0.2
+// run 30 times
 for (let i = 0; i < 30; i++) {
-  value += (newValue - value) / easingFactor
+  value += (newValue - value) * easingFactor
   console.log(value)
 }
 ```
@@ -61,15 +67,13 @@ The numbers we get looks somewhat like this:
 99.87620599607146
 ```
 
-As you can see, the number reaches 90 pretty fast. If we continue to run in forever, it will actually never get to 100, which was our target goal. But it will get so close that you wouldn't notice if you used it it some animation.
+As you can see, the number reaches 90 pretty fast. If we continue to run it forever, it will actually never get to 100, our target goal. But it will get so close that you wouldn't notice if you used it it some animation.
 
 ### Some examples
 
 ### Different ways to achieve the same goal
 
-You could also do this using [*linear interpolation*](https://en.wikipedia.org/wiki/Linear_interpolation), also known as *lerping*.
-
-This is a lerp function
+There are many ways to achieve this. One way is to use [*linear interpolation*](https://en.wikipedia.org/wiki/Linear_interpolation), also known as *lerping*. Like so:
 ```
 function lerp(v0, v1, t) {
   return v0 * (1 - t) + v1 * t
@@ -78,7 +82,7 @@ function lerp(v0, v1, t) {
 
 Where `v1` is the current value, and `v1` is the value we want to animate to. `t` represents the fraction  of the distance  you want to end at (between 0 and 1). For instance: `lerp(0, 20, 0.5)` will give you 10. `lerp(50, 100, 0.5)` would give you 75.
 
-If we were to use this function in our example above, it would look something like this
+If we were to use this function in our example above, it would look something like this:
 
 ```
 // set an initial value of 0
@@ -96,4 +100,16 @@ for (let i = 0; i < 30; i++) {
   value = lerp(value, newValue, 0.25)
   console.log(value)
 }
+```
+
+Or alternatively, if you have a moving object, you can smoothly slow it down by multiplying it's velocity with a number pretty close to 1, e.g.:
+```
+// define a position and a velocity
+let position = 0
+let veloctiy = 100
+
+// on every frame, multiply by an arbitrary
+// number close to 1
+position += velocity
+velocity *= 0.967
 ```

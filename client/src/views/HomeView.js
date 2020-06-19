@@ -13,7 +13,7 @@ export default class HomeView extends View {
   constructor(options) {
     super(options);
 
-    const msnryContainer = this.el.querySelector('.masonry-container');
+    this.msnryContainer = this.el.querySelector('.masonry-container');
 
     // TODO: Maybe later
     // let onIntersect = (entries, observer) => {
@@ -27,22 +27,50 @@ export default class HomeView extends View {
     //   threshold: 1.0,
     // });
 
-    this.iso = new Isotope(msnryContainer, {
+    this.iso = new Isotope(this.msnryContainer, {
       // options
       percentPosition: true,
       itemSelector: '.item',
       columnWidth: '.grid-sizer',
       stagger: 50,
+      transitionDuration: 0,
     });
-    this.createGridItems(msnryContainer, this.iso);
+
+    this.createGridItems(this.msnryContainer, this.iso);
   }
 
   createGridItems(target, isotope, observer) {
-    projects.forEach((project) => {
+    let numLoaded = 0;
+    let tweens = [];
+
+    projects.forEach((project, index) => {
       new GridItem({
         project,
         target,
-        isotope,
+        // element is created
+        onCreated: (el) => {
+          isotope.insert(el);
+          // get tween ready
+          tweens.push(
+            gsap.from(el, {
+              duration: 0.9,
+              scale: 0.5,
+              opacity: 0,
+              delay: 0.1 + index * 0.07,
+              ease: 'expo.out',
+              paused: true,
+            })
+          );
+        },
+        // element is loaded
+        onLoaded: (el) => {
+          numLoaded++;
+          if (numLoaded >= projects.length) {
+            isotope.layout();
+            tweens.forEach((tween) => tween.play());
+            this.iso.options.transitionDuration = '0.45s';
+          }
+        },
       });
     });
   }
@@ -50,8 +78,6 @@ export default class HomeView extends View {
   paramChange(param) {
     const projectId = param?.projectId;
     const tag = param?.tag;
-
-    console.log('PARAM CAHNGE', projectId);
 
     if (this.projectPage) {
       this.projectPage.destroy();
@@ -65,6 +91,10 @@ export default class HomeView extends View {
       this.projectPage = new ProjectPage(project, this.el);
       Sidebar.showSidebar(project);
       webgl.openProject();
+
+      gsap.to(this.msnryContainer, { duration: 0.45, opacity: 0 });
+    } else {
+      gsap.to(this.msnryContainer, { duration: 0.35, opacity: 1 });
     }
 
     if (tag) {
@@ -81,13 +111,11 @@ export default class HomeView extends View {
   show(param) {
     this.paramChange(param);
     this.showComplete();
-
-    gsap.from(this.el, { duration: 1, opacity: 0 });
   }
 
   hide() {
     gsap.to(this.el, {
-      duration: 1,
+      duration: 0.35,
       opacity: 0,
       onComplete: this.hideComplete,
     });

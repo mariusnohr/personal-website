@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "copy-projects": "cp -a ./sketches/. ./public/sketches",
+    "serve": "node server/server.js",
     "dev": "parcel client/templates/index.html -d public",
     "prebuild": "npm run clean",
     "clean": "rm -rf ./public && rm -rf .cache",

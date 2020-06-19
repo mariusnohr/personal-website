@@ -25,6 +25,8 @@ class Sidebar {
 
     this.sidebarEl = null;
     this.animateNav();
+
+    this.el.classList.add('show');
   }
 
   animateNav() {
