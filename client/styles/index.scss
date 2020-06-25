@@ -45,6 +45,10 @@ button {
   margin: 0 auto;
   display: flex;
   position: relative;
+
+  @include small {
+    flex-direction: column;
+  }
 }
 
 aside {
@@ -57,6 +61,11 @@ aside {
   justify-content: center;
   max-width: 300px;
   opacity: 0;
+
+  @include small {
+    width: 100%;
+    max-width: 100%;
+  }
 
   &.show {
     opacity: 1;
@@ -189,6 +198,7 @@ aside {
       border: 3px solid black;
       border-radius: 50%;
       position: relative;
+      background: none;
       &:after {
         content: 'BACK';
         position: absolute;
@@ -223,6 +233,9 @@ aside {
 #app {
   width: 70%;
   flex-grow: 2;
+  @include small {
+    width: 100%;
+  }
 }
 
 ul {
@@ -240,9 +253,6 @@ ul {
     }
     @include medium {
       width: 50%;
-    }
-    @include small {
-      width: 100%;
     }
   }
 
@@ -277,7 +287,6 @@ ul {
       max-width: 80%;
       overflow: hidden;
       transform: scaleX(0);
-      // opacity: 0;
       transform-origin: center left;
       transition: transform 0.2s $ease-in-out-cubic 0.1s;
 
@@ -407,20 +416,19 @@ ul {
     }
 
     &:hover {
-      z-index: 1;
+      z-index: 10;
       img, .icon {
         transition: transform 0.35s $ease-out-back;
         transform: scale(1.15);
       }
 
       .title {
-        transform: scaleX(1) scaleY(1);
-        // opacity: 1;
+        transform: scaleX(1);
         transition: transform 0.2s $ease-out-cubic 0s, opacity 0.2s ease 0s;
+        z-index: 1;
         h4 {
           opacity: 1;
           transition: opacity 0.25s ease 0.15s;
-          // transition: opacity 0.3s ease, transform 0.3s ease-out;
         }
         span {
           opacity: 1;
@@ -464,6 +472,11 @@ ul {
           content: '–';
           margin-right: 0.5em;
         }
+      }
+
+      iframe {
+        border: none;
+        margin-bottom: 30px;
       }
     }
 

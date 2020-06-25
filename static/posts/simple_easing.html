@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Simple easing</title>
+    <style type="text/css">
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      html, body {
+        height: 100%;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      canvas {
+        width: 100%;
+        height: 100%;
+        background: #ececec;
+      }
+
+      button {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(tomato, 0.5);
+        color: #666;
+        border: 2px solid #666;
+        font-size: 18px;
+        padding: 12px 26px;
+        text-transform: uppercase;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: border 0.35s ease, color 0.35s ease;
+        min-width: 220px;
+      }
+
+      button:hover {
+        color: black;
+        border: 2px solid black;
+      }
+    </style>
+  </head>
+
+  <body>
+    <canvas id="canvas">Your browser doesn't support the HTML canvas element.</canvas>
+    <button>Click to start</button>
+    <script src="https://cdn.jsdelivr.net/npm/tweakpane@1.5.2/dist/tweakpane.min.js"></script>
+    <script src="utils.js"></script>
+    <script>
+      const canvas = document.querySelector('#canvas')
+      const btn = document.querySelector('button')
+      const ctx = scaleCanvas(canvas)
+      const center = {
+        x: window.innerWidth * 0.5,
+        y: window.innerHeight * 0.5
+      }
+      let radius = Math.min(window.innerWidth, window.innerHeight) * 0.035;
+      
+      // set both position and target to the center of the screen
+      let pos = {
+        x: center.x,
+        y: center.y
+      }
+      let target = {
+        x: center.x,
+        y: center.y
+      }
+
+      let PARAMS = {
+        easingFactor: 0.1
+      }
+
+      function animate() {
+          
+        requestAnimationFrame(animate)
+
+        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
+        
+        // draw circle at our target
+        ctx.beginPath();
+        ctx.arc(pos.x, pos.y, radius, 0, 2 * Math.PI, false);
+        ctx.fillStyle = 'tomato';
+        ctx.fill();
+
+        // perform easing
+        pos.x += (target.x - pos.x) * PARAMS.easingFactor
+        pos.y += (target.y - pos.y) * PARAMS.easingFactor
+      }
+      
+      // set our target values
+      function onCanvasClick(x, y) {
+        target = { x, y }
+        console.log(target)
+      }
+
+      btn.addEventListener('click', function() {
+        btn.style.display = 'none'
+        animate()
+        clickable(canvas, onCanvasClick)
+      })
+
+      const pane = new Tweakpane();
+      pane.addInput(PARAMS, 'easingFactor', {label: 'Easing', min: 0, max: 1});
+      
+    </script>
+  </body>
+</html>

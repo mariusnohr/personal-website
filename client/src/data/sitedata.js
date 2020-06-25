@@ -78,7 +78,7 @@ export const projects = [
     description:
       'Triangular mesh with offset based noise. Bring up the debug panel with Shift + D',
     template: TEMPLATE.IFRAME,
-    background: '#f2f2f2',
+    background: '#efefef',
     data: {
       src: '/sketches/triangular_mesh',
     },
@@ -93,7 +93,7 @@ export const projects = [
     description:
       'Wave-like lines created using Simplex 2D noise. Adjust the frequency and amplitude by moving your pointer or finger across the screen. Bring up the debug panel with Shift + D',
     template: TEMPLATE.IFRAME,
-    background: '#f2f2f2',
+    background: '#ecdfdd',
     data: {
       src: '/sketches/wavy_noise_lines',
     },
@@ -123,7 +123,7 @@ export const projects = [
     template: TEMPLATE.IFRAME,
     description:
       '2D noise applied to particles forming some kind of interesting magnetic field pattern. Hit Shift + D to bring up the debug panel',
-    background: '#383d59',
+    background: '#f2e3d5',
     data: {
       src: '/sketches/magnetic_noise_fields',
     },

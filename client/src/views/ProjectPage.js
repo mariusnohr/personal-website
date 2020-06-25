@@ -56,18 +56,23 @@ export default class ProjectPage {
 
       gsap.from(container, { duration: 0.7, y: 15, opacity: 0 });
       window.scrollTo(0, 0);
+
+      const iframes = contentContainer.querySelectorAll('iframe');
+      iframes.forEach((iframe) => {
+        iframe.setAttribute('src', iframe.getAttribute('data-src'));
+      });
     };
 
     this.el = document.createElement('div');
     this.el.classList.add('project-note');
     target.appendChild(this.el);
 
-    // gsap.from(this.el, {
-    //   duration: 0.6,
-    //   scale: 0.5,
-    //   ease: 'power4.inOut',
-    //   onComplete: onAnimComplete,
-    // });
+    gsap.from(this.el, {
+      duration: 0.6,
+      scale: 0.5,
+      ease: 'power4.inOut',
+      onComplete: onAnimComplete,
+    });
   }
 
   createIframeTemplate(project, target) {
@@ -93,7 +98,7 @@ export default class ProjectPage {
       },
     });
 
-    // gsap.from(this.el, { duration: 0.3, opacity: 0 });
+    gsap.from(this.el, { duration: 0.45, opacity: 0 });
   }
 
   onIframeResize = () => {

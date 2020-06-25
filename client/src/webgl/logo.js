@@ -57,8 +57,8 @@ function mouseOverState() {
 }
 
 function mouseOutState(onComplete, isAnimating) {
-  const darken = isAnimating ? 0.8 : 1;
-  const amp = isAnimating ? 0.1 : 0;
+  const darken = active ? 0.8 : 1;
+  const amp = active ? 0.1 : 0;
 
   gsap.to(uniforms.darken, { duration: 0.6, value: 1 });
   gsap.to(uniforms.amp, { duration: 0.6, value: amp });
@@ -84,12 +84,11 @@ export function mouseover() {
   }
 }
 
-export function mouseout(onComplete, isAnimating) {
+export function mouseout(onComplete, isAnimating, active) {
   const mouseOver = uniforms.mouseover.value;
 
   if (mouseOver) {
     uniforms.mouseover.value = false;
-    console.log(onComplete);
     mouseOutState(onComplete, isAnimating);
   }
 }

@@ -1,4 +1,4 @@
-I remember one of the fist things I learned when I first started out with coding and animation, was this nice little equation:
+I remember one of the first things I learned when I started out with coding and animation, was this nice little equation/one-liner:
 
 ```
 // instad of just setting the new value 
@@ -9,11 +9,11 @@ value = newValue
 value += (newValue - value) * easingFactor
 ```
 
-The principle is pretty simple. Instead of setting the value directly, we make the increments smaller and smaller as we apporach our target. This can make the movement feel a lot more organic. Whether it's about animating some position property or some user interaction.
+The principle is pretty simple. Instead of setting the value directly, we make the increments smaller and smaller as we apporach our target value. This can make the movement feel a lot more organic. Whether it's about animating some position property or some user interaction.
 
 I guess there's no need to have the word "magic" in the headline, as there's not really anything magic going on here. It sure *felt* a little magic the first time I discovered it though.
 
-This post is a tribute to this little piece of code.
+This post is a tribute to this little line of code.
 
 ### To elaborate a little
 
@@ -24,7 +24,8 @@ The calculation is pretty simple. We can also get a good look at what's happenin
 let value = 0
 // the new value should be 100
 let newValue = 100
-// we set our "easingFactor" variable to 5
+// we set our "easingFactor" variable to a 
+// value close to 0 such as 0.2
 let easingFactor = 0.2
 // run 30 times
 for (let i = 0; i < 30; i++) {
@@ -67,9 +68,13 @@ The numbers we get looks somewhat like this:
 99.87620599607146
 ```
 
-As you can see, the number reaches 90 pretty fast. If we continue to run it forever, it will actually never get to 100, our target goal. But it will get so close that you wouldn't notice if you used it it some animation.
+As you can see, it reaches 90 pretty fast. Then it will gradually slow down as it approches our target value. If we continue to run it forever, it will actually never get to 100, which is our target goal. But it will get so close that the difference wouldn't really be noticeable. (Or you will at least run into [*floating point precision*](https://en.wikipedia.org/wiki/Single-precision_floating-point_format)).
 
-### Some examples
+### An example
+
+Tap or click somewhere in the example below to move the circle around. Play with the easing value to watch how the animation changes. Values closer to 0 will create a slower animation, while values closer to 1 will create a much more snappy animation.
+
+<iframe width="100%" height="600" data-src="/posts/simple_easing.html"></iframe>
 
 ### Different ways to achieve the same goal
 
@@ -80,7 +85,7 @@ function lerp(v0, v1, t) {
 }
 ```
 
-Where `v1` is the current value, and `v1` is the value we want to animate to. `t` represents the fraction  of the distance  you want to end at (between 0 and 1). For instance: `lerp(0, 20, 0.5)` will give you 10. `lerp(50, 100, 0.5)` would give you 75.
+Where `v0` is the current value, and `v1` is the value we want to animate to. `t` represents the fraction of the distance you want to end at (between 0 and 1). For instance: `lerp(0, 20, 0.5)` will give you 10. `lerp(50, 100, 0.5)` would give you 75.
 
 If we were to use this function in our example above, it would look something like this:
 
