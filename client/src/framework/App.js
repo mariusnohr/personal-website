@@ -32,14 +32,16 @@ export default class App {
     this.displayManager.show(currentItem);
   }
 
-  onRender = () => {
+  onRender = (updateRefs = true) => {
     const currentLocation = router.getCurrentLocation();
     const currentItem = router.getMatchingRoute(currentLocation.pathname);
-    const linkElements = this.rootElement.querySelectorAll('a[data-route]');
 
-    linkElements.forEach((el) => {
-      this.createLink(el);
-    });
+    if (updateRefs) {
+      const linkElements = this.rootElement.querySelectorAll('a[data-route]');
+      linkElements.forEach((el) => {
+        this.createLink(el);
+      });
+    }
 
     if (this.addRootClass) {
       const { match } = currentItem;

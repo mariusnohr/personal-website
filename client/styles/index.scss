@@ -47,7 +47,16 @@ button {
   position: relative;
 
   @include small {
-    flex-direction: column;
+    display: block;
+  }
+
+  &.touch-open {
+    #app {
+      top: 480px;
+    }
+    aside nav {
+      opacity: 1;
+    }
   }
 }
 
@@ -65,6 +74,10 @@ aside {
   @include small {
     width: 100%;
     max-width: 100%;
+    height: 220px;
+    position: fixed;
+    padding-top: 140px;
+    overflow: hidden;
   }
 
   &.show {
@@ -80,12 +93,47 @@ aside {
     max-height: 250px;
     top: 0;
     max-width: 300px;
+
+    @include small {
+      height: 100%;
+      width: 40%;
+      min-height: auto;
+      max-height: 150px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+
+  .menu-btn {
+    display: none;
+    margin: 0 auto;
+    padding: 10px;
+    font-size: 16px;
+    text-transform: uppercase;
+    line-height: 16px;
+    background: none;
+    border: none;
+    @include small {
+      display: flex;
+    }
+
+    svg {
+      width: 19px;
+      height: 15px;
+      margin-right: 6px;
+    }
   }
 
   nav {
     position: fixed;
     padding: 30px;
     transition: transform 0.35s ease, opacity 0.35s ease, visibility 0.35s ease;
+
+    @include small {
+      top: 220px;
+      padding: 0;
+      opacity: 0;
+    }
 
     &.hide {
       transform: translateX(-50%);
@@ -139,6 +187,9 @@ aside {
     width: 100%;
     max-width: 200px;
     margin: 15px auto;
+    @include small {
+      text-align: center;
+    }
     li {
       line-height: 1em;
     }
@@ -153,6 +204,10 @@ aside {
     opacity: 0;
     transform: translateX(50%);
     transition: transform 0.35s ease, opacity 0.35s ease, visibility 0.35s ease;
+
+    @include small {
+      display: none;
+    }
 
     &.show {
       opacity: 1;
@@ -235,6 +290,13 @@ aside {
   flex-grow: 2;
   @include small {
     width: 100%;
+    position: relative;
+    top: 220px;
+    transition: top 0.65s $ease-in-out-quint;
+  }
+
+  &.project-page {
+    top: 0;
   }
 }
 
@@ -289,6 +351,12 @@ ul {
       transform: scaleX(0);
       transform-origin: center left;
       transition: transform 0.2s $ease-in-out-cubic 0.1s;
+
+      @include small {
+        padding: 10px;
+        bottom: 15px;
+        left: 0;
+      }
 
       h4 {
         color: #ccc;
@@ -463,6 +531,10 @@ ul {
     padding: 60px;
     z-index: 2;
 
+    @include small {
+      padding: 25px;
+    }
+
     .content {
       width: 100%;
       max-width: 850px;
@@ -480,6 +552,12 @@ ul {
       }
     }
 
+    h1 {
+      @include small {
+        font-size: 3rem;
+      }
+    }
+
     a {
       color: currentColor;
       &:hover {
@@ -490,6 +568,10 @@ ul {
     .hljs {
       padding: 1.8rem;
       border-radius: 12px;
+      
+      @include small {
+        padding: 1rem 0.8rem;
+      }
     }
   }
 }
@@ -504,32 +586,56 @@ h1 {
   font-weight: 900;
   line-height: 1em;
   margin-bottom: 2rem;
+
+  @include small {
+    font-size: 4rem;
+  }
 }
 
 ul, li, p {
   font-size: 1.4rem;
   line-height: 1.5em;
+  
+  @include small {
+    font-size: 1rem;
+  }
 }
 
 ul, p {
   margin-bottom: 2rem;
+  @include small {
+    margin-bottom: 1rem;
+  }
 }
 
 h3 {
   font-size: 1.8rem;
   margin-bottom: 1rem;
-  margin-top: 1rem;
+  margin-top: 2rem;
+
+  @include small {
+    font-size: 1.6rem;
+  }
 }
 
 pre, code {
   font-size: 1.4rem;
   margin-bottom: 2rem;
+
+  @include small {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
 }
 
 .view {
   .content {
     padding: 80px 80px 80px 30px;
     max-width: 950px;
+
+    @include small {
+      padding: 0px 25px 30px;
+    }
   }
   
   a {

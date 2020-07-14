@@ -120,6 +120,9 @@ class Sidebar {
     });
 
     if (id === 'about' || id === 'resume') this.setActiveFilter(null);
+
+    // hide mobile nav
+    this.hideMobileNav();
   }
 
   setActiveFilter(id) {
@@ -134,6 +137,14 @@ class Sidebar {
         el.classList.remove('active', 'inactive');
       }
     });
+  }
+
+  toggleMobileNav() {
+    this.el.parentNode.classList.toggle('touch-open');
+  }
+
+  hideMobileNav() {
+    this.el.parentNode.classList.remove('touch-open');
   }
 }
 

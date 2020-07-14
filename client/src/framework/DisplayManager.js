@@ -51,6 +51,7 @@ export default class DisplayManager {
           this.view.constructor === item.component
         ) {
           this.view.paramChange(param);
+          this.onRender(false);
         } else {
           // hide current, set next
           this.next = obj;

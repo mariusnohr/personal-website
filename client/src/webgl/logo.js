@@ -32,10 +32,16 @@ export function positionLogo(measure, animation = false) {
   const visibleWidth = visibleWidthAtZDepth(mesh.position.z, cam);
 
   const pxToUnits = visibleWidth / window.innerWidth;
+  const pxToUnits2 = visibleHeight / window.innerHeight;
   const leftCol = pxToUnits * measure.width;
 
-  const aspect = window.innerWidth / window.innerHeight;
-  const scale = clamp(aspect * 0.5, 0.7, 0.8);
+  let aspect = window.innerWidth / window.innerHeight;
+  let scale = clamp(aspect * 0.65, 0.6, 0.8);
+
+  if (window.innerWidth <= 540) {
+    scale = pxToUnits2 * 65;
+  }
+
   mesh.scale.set(scale, scale, 1);
 
   mesh.position.x = -visibleWidth * 0.5 + leftCol * 0.5;

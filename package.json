@@ -9,7 +9,7 @@
     "dev": "parcel client/templates/index.html -d public",
     "prebuild": "npm run clean",
     "clean": "rm -rf ./public && rm -rf .cache",
-    "build": "parcel build client/templates/index.html -d public",
+    "build": "parcel build client/templates/index.html -d public --no-source-maps",
     "start": "npm run dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

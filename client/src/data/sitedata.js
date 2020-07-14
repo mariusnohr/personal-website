@@ -12,6 +12,8 @@ import image9 from '../../media/images/project9.jpg';
 import image10 from '../../media/images/project10.jpg';
 import image11 from '../../media/images/project11.jpg';
 import image12 from '../../media/images/project12.jpg';
+import image13 from '../../media/images/project13.jpg';
+import image14 from '../../media/images/project14.jpg';
 
 import note1 from '../../notes/the-magic-easing.md';
 
@@ -26,6 +28,36 @@ import note1 from '../../notes/the-magic-easing.md';
 // CASE_STUDY: 'Case Study',
 
 export const projects = [
+  {
+    id: 'rotating-squares',
+    image: image14,
+    assetType: ASSET_TYPE.IMAGE,
+    title: 'Rotating Squares',
+    tags: [TAG.SKETCH, TAG.INTERACTIVE],
+    published_at: '09/07/2020',
+    description:
+      'A bunch of squares in a grid rotating using the angle between the square and mouse position. Click to generate a wave.',
+    template: TEMPLATE.IFRAME,
+    background: '#C1D0D9',
+    data: {
+      src: '/sketches/rotating_squares',
+    },
+  },
+  {
+    id: 'vector-field-particles',
+    image: image13,
+    assetType: ASSET_TYPE.IMAGE,
+    title: 'Animated Vector Field',
+    tags: [TAG.SKETCH, TAG.GENERATIVE],
+    published_at: '07/07/2020',
+    description:
+      'Particles animated in a vector field. It has a lot of settings, so hit Shift + D to bring up the debug panel and tweak some settings. Click to generate new particles at the mouse or finger position.',
+    template: TEMPLATE.IFRAME,
+    background: '#001B48',
+    data: {
+      src: '/sketches/vector_field_particles',
+    },
+  },
   {
     id: 'animated-vector-fields',
     image: image12,
@@ -45,7 +77,7 @@ export const projects = [
     id: 'noise-blob',
     image: image11,
     assetType: ASSET_TYPE.IMAGE,
-    title: 'Noise Blob II',
+    title: 'Noise Blob',
     tags: [TAG.SKETCH, TAG.INTERACTIVE],
     published_at: '20/05/2020',
     description:
@@ -76,7 +108,7 @@ export const projects = [
     tags: [TAG.SKETCH, TAG.INTERACTIVE],
     published_at: '05/05/2020',
     description:
-      'Triangular mesh with offset based noise. Bring up the debug panel with Shift + D',
+      'Triangular mesh with offset based noise. Click to generate a random. Bring up the debug panel with Shift + D',
     template: TEMPLATE.IFRAME,
     background: '#efefef',
     data: {
@@ -212,7 +244,7 @@ export const projects = [
     published_at: '20/06/2018',
     template: TEMPLATE.IFRAME,
     description:
-      "This was my first real attempt at creating an interactive particle cloud where the forces are purely calculated on GPU. Didn't turn out exactly as planned, but hey I still learned something.",
+      "This was my first real attempt at creating an interactive particle cloud where the forces are purely calculated on GPU. Didn't turn out exactly as planned, but hey I still learned something. Click and drag to rotate the cloud.",
     background: '#20252f',
     data: {
       src: '/sketches/interactive_particles',

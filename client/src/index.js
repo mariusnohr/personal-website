@@ -35,6 +35,12 @@ function init() {
 
   window.addEventListener('resize', resize);
 
+  if (window.innerWidth <= 540) {
+    document.querySelector('.menu-btn').addEventListener('click', () => {
+      Sidebar.toggleMobileNav();
+    });
+  }
+
   new App({
     root: document.querySelector('#app'),
     routes: {
