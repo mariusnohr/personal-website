@@ -14,6 +14,8 @@ import image11 from '../../media/images/project11.jpg';
 import image12 from '../../media/images/project12.jpg';
 import image13 from '../../media/images/project13.jpg';
 import image14 from '../../media/images/project14.jpg';
+import image15 from '../../media/images/15.jpg';
+import image16 from '../../media/images/16.jpg';
 
 import note1 from '../../notes/the-magic-easing.md';
 
@@ -28,6 +30,36 @@ import note1 from '../../notes/the-magic-easing.md';
 // CASE_STUDY: 'Case Study',
 
 export const projects = [
+  {
+    id: 'simple-2d-physics',
+    image: image16,
+    assetType: ASSET_TYPE.IMAGE,
+    title: 'Simple 2D Physics',
+    tags: [TAG.SKETCH, TAG.INTERACTIVE],
+    published_at: '17/07/2020',
+    description:
+      'Super simple 2D physics test. Sorry if this crashes your browser.',
+    template: TEMPLATE.IFRAME,
+    background: '#151515',
+    data: {
+      src: '/sketches/simple_2d_physics',
+    },
+  },
+  {
+    id: 'square-particle-stream',
+    image: image15,
+    assetType: ASSET_TYPE.IMAGE,
+    title: 'Square Particle Stream',
+    tags: [TAG.SKETCH, TAG.INTERACTIVE],
+    published_at: '15/07/2020',
+    description:
+      'Square particles moving along a sine wave. Move your mouse to interact with them. Tweak settings with Shift + D.',
+    template: TEMPLATE.IFRAME,
+    background: '#5f55a7',
+    data: {
+      src: '/sketches/square_particle_stream',
+    },
+  },
   {
     id: 'rotating-squares',
     image: image14,
@@ -47,7 +79,7 @@ export const projects = [
     id: 'vector-field-particles',
     image: image13,
     assetType: ASSET_TYPE.IMAGE,
-    title: 'Animated Vector Field',
+    title: 'Vector Field Particles',
     tags: [TAG.SKETCH, TAG.GENERATIVE],
     published_at: '07/07/2020',
     description:
