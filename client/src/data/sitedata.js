@@ -38,7 +38,7 @@ export const projects = [
     tags: [TAG.SKETCH, TAG.INTERACTIVE],
     published_at: '17/07/2020',
     description:
-      'Super simple 2D physics test. Sorry if this crashes your browser.',
+      'Super simple 2D physics test. I wanted many balls, so sorry if this crashes your browser.',
     template: TEMPLATE.IFRAME,
     background: '#151515',
     data: {
