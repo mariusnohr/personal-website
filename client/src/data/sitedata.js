@@ -137,7 +137,7 @@ export const projects = [
     image: image10,
     assetType: ASSET_TYPE.IMAGE,
     title: 'Triangular Mesh',
-    tags: [TAG.SKETCH, TAG.INTERACTIVE],
+    tags: [TAG.SKETCH, TAG.INTERACTIVE, TAG.GENERATIVE],
     published_at: '05/05/2020',
     description:
       'Triangular mesh with offset based noise. Click to generate a random. Bring up the debug panel with Shift + D',
@@ -152,7 +152,7 @@ export const projects = [
     image: image9,
     assetType: ASSET_TYPE.IMAGE,
     title: 'Wavy Noise Lines',
-    tags: [TAG.SKETCH, TAG.INTERACTIVE],
+    tags: [TAG.SKETCH, TAG.INTERACTIVE, TAG.GENERATIVE],
     published_at: '02/05/2020',
     description:
       'Wave-like lines created using Simplex 2D noise. Adjust the frequency and amplitude by moving your pointer or finger across the screen. Bring up the debug panel with Shift + D',
