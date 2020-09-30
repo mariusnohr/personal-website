@@ -16,6 +16,7 @@ import image13 from '../../media/images/project13.jpg';
 import image14 from '../../media/images/project14.jpg';
 import image15 from '../../media/images/15.jpg';
 import image16 from '../../media/images/16.jpg';
+import image17 from '../../media/images/17.jpg';
 
 import note1 from '../../notes/the-magic-easing.md';
 
@@ -30,6 +31,20 @@ import note1 from '../../notes/the-magic-easing.md';
 // CASE_STUDY: 'Case Study',
 
 export const projects = [
+  {
+    id: 'instanced-balls',
+    image: image17,
+    assetType: ASSET_TYPE.IMAGE,
+    title: 'Instanced Spheres',
+    tags: [TAG.SKETCH, TAG.INTERACTIVE],
+    published_at: '30/09/2020',
+    description: 'A lot of instanced spheres.',
+    template: TEMPLATE.IFRAME,
+    background: '#000000',
+    data: {
+      src: '/sketches/instanced-spheres',
+    },
+  },
   {
     id: 'simple-2d-physics',
     image: image16,
