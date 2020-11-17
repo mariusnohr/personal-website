@@ -17,6 +17,7 @@ import image14 from '../../media/images/project14.jpg';
 import image15 from '../../media/images/15.jpg';
 import image16 from '../../media/images/16.jpg';
 import image17 from '../../media/images/17.jpg';
+import image18 from '../../media/images/18.jpg';
 
 import note1 from '../../notes/the-magic-easing.md';
 
@@ -31,6 +32,21 @@ import note1 from '../../notes/the-magic-easing.md';
 // CASE_STUDY: 'Case Study',
 
 export const projects = [
+  {
+    id: 'truchet-tiling',
+    image: image18,
+    assetType: ASSET_TYPE.IMAGE,
+    title: 'Truchet Tiling',
+    tags: [TAG.SKETCH, TAG.INTERACTIVE],
+    published_at: '17/11/2020',
+    description:
+      'An experiment with the Truchet-tiling effect using the 2D canvas API. Get some options with Shift + D.',
+    template: TEMPLATE.IFRAME,
+    background: '#262626',
+    data: {
+      src: '/sketches/truchet-tiling',
+    },
+  },
   {
     id: 'instanced-balls',
     image: image17,
