@@ -41,9 +41,9 @@ export const projects = [
     tags: [TAG.SKETCH, TAG.INTERACTIVE],
     published_at: '17/11/2020',
     description:
-      "An experiment where I tried to implement a cloth using Verlet integration. I also added a noise field to make it look like it's blowing in the wind. Get some wind options with Shift + D.",
+      "An experiment where I tried to implement a cloth using Verlet integration. I also added a noise field to make it look like it's blowing in the wind. Cut holes by holding down finger/mouse button. Get some wind options with Shift + D.",
     template: TEMPLATE.IFRAME,
-    background: '#262626',
+    background: '#0d0d0d',
     data: {
       src: '/sketches/blowing-cloth',
     },
