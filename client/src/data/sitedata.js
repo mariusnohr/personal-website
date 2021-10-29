@@ -18,6 +18,7 @@ import image15 from '../../media/images/15.jpg';
 import image16 from '../../media/images/16.jpg';
 import image17 from '../../media/images/17.jpg';
 import image18 from '../../media/images/18.jpg';
+import image19 from '../../media/images/19.jpg';
 
 import note1 from '../../notes/the-magic-easing.md';
 
@@ -32,6 +33,21 @@ import note1 from '../../notes/the-magic-easing.md';
 // CASE_STUDY: 'Case Study',
 
 export const projects = [
+  {
+    id: 'blowing-cloth',
+    image: image19,
+    assetType: ASSET_TYPE.IMAGE,
+    title: 'Cloth in the wind',
+    tags: [TAG.SKETCH, TAG.INTERACTIVE],
+    published_at: '17/11/2020',
+    description:
+      "An experiment where I tried to implement a cloth using Verlet integration. I also added a noise field to make it look like it's blowing in the wind. Get some wind options with Shift + D.",
+    template: TEMPLATE.IFRAME,
+    background: '#262626',
+    data: {
+      src: '/sketches/blowing-cloth',
+    },
+  },
   {
     id: 'truchet-tiling',
     image: image18,
