@@ -75,7 +75,10 @@ export default class ProjectPage {
 
   createIframeTemplate(project: IframeProject, target: HTMLElement): void {
     const iframe = document.createElement('iframe');
-    iframe.src = `${project.data.src}/`;
+    // Point at the explicit entry file. Vite serves publicDir by exact path
+    // in dev (unlike the production static server), so a bare directory URL
+    // would fall back to the app shell instead of the experiment.
+    iframe.src = `${project.data.src}/index.html`;
 
     this.el = document.createElement('div');
     this.el.classList.add('project-iframe');
