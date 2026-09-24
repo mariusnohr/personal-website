@@ -1,5 +1,6 @@
 import gsap from 'gsap';
 import { TEMPLATE } from '../config/constants';
+import type { Project } from '../data/sitedata';
 import backIcon from '../icons/back';
 import clockIcon from '../icons/clock';
 import { router } from '../framework/App';
@@ -8,12 +9,23 @@ import * as webgl from '../webgl/main';
 const NAV_IN_DELAY = 0.5;
 
 class Sidebar {
+  el: HTMLElement;
+  nav: HTMLElement;
+  navButtons: NodeListOf<HTMLAnchorElement>;
+  filterButtons: NodeListOf<HTMLAnchorElement>;
+  logo: HTMLElement;
+  sidebarEl: HTMLElement | null = null;
+
   constructor() {
-    this.el = document.querySelector('aside');
-    this.nav = this.el.querySelector('nav');
-    this.navButtons = this.nav.querySelectorAll('a');
-    this.filterButtons = this.nav.querySelectorAll('.filter-menu a');
-    this.logo = this.el.querySelector('.logo');
+    this.el = document.querySelector('aside') as HTMLElement;
+    this.nav = this.el.querySelector('nav') as HTMLElement;
+    this.navButtons = this.nav.querySelectorAll(
+      'a',
+    ) as NodeListOf<HTMLAnchorElement>;
+    this.filterButtons = this.nav.querySelectorAll(
+      '.filter-menu a',
+    ) as NodeListOf<HTMLAnchorElement>;
+    this.logo = this.el.querySelector('.logo') as HTMLElement;
 
     this.logo.addEventListener('mouseover', () => {
       webgl.logoHover(true);
@@ -29,7 +41,7 @@ class Sidebar {
     this.el.classList.add('show');
   }
 
-  animateNav() {
+  animateNav(): void {
     const lis = this.nav.querySelectorAll('li');
     lis.forEach((el, index) => {
       const delay = NAV_IN_DELAY + 0.1 * index;
@@ -43,14 +55,14 @@ class Sidebar {
     });
   }
 
-  showSidebar(project) {
-    const { title, description, published_at, template } = project;
+  showSidebar(project: Project): void {
+    const { published_at } = project;
 
     this.nav.classList.add('hide');
     this.sidebarEl = document.createElement('div');
     this.sidebarEl.classList.add('sidebar');
 
-    if (template === TEMPLATE.NOTE) {
+    if (project.template === TEMPLATE.NOTE) {
       const { content } = project;
       const len = content.split(' ').length;
       const readingTime = Math.ceil(len / 200);
@@ -65,8 +77,8 @@ class Sidebar {
       const h3 = document.createElement('h3');
       const p = document.createElement('p');
 
-      h3.textContent = title;
-      p.textContent = description;
+      h3.textContent = project.title;
+      p.textContent = project.description;
 
       this.sidebarEl.appendChild(h3);
       this.sidebarEl.appendChild(p);
@@ -90,11 +102,11 @@ class Sidebar {
     this.el.appendChild(this.sidebarEl);
 
     setTimeout(() => {
-      this.sidebarEl.classList.add('show');
+      this.sidebarEl?.classList.add('show');
     }, 150);
   }
 
-  showNav() {
+  showNav(): void {
     // remove sidebar if visible
     let delay = 0;
     if (this.sidebarEl) {
@@ -110,7 +122,7 @@ class Sidebar {
     }, delay);
   }
 
-  setActiveButton(pathname) {
+  setActiveButton(pathname: string): void {
     // get last segment of pathname
     const id = pathname.substring(pathname.lastIndexOf('/') + 1);
 
@@ -125,7 +137,7 @@ class Sidebar {
     this.hideMobileNav();
   }
 
-  setActiveFilter(id) {
+  setActiveFilter(id: string | null): void {
     this.filterButtons.forEach((el) => {
       if (id) {
         if (el.getAttribute('data-id') === id) {
@@ -139,12 +151,12 @@ class Sidebar {
     });
   }
 
-  toggleMobileNav() {
-    this.el.parentNode.classList.toggle('touch-open');
+  toggleMobileNav(): void {
+    (this.el.parentNode as HTMLElement).classList.toggle('touch-open');
   }
 
-  hideMobileNav() {
-    this.el.parentNode.classList.remove('touch-open');
+  hideMobileNav(): void {
+    (this.el.parentNode as HTMLElement).classList.remove('touch-open');
   }
 }
 

@@ -1,5 +1,5 @@
-@import 'easing';
-@import 'screensize';
+@use 'easing' as *;
+@use 'screensize' as *;
 
 * {
   margin: 0;
@@ -127,7 +127,10 @@ aside {
   nav {
     position: fixed;
     padding: 30px;
-    transition: transform 0.35s ease, opacity 0.35s ease, visibility 0.35s ease;
+    transition:
+      transform 0.35s ease,
+      opacity 0.35s ease,
+      visibility 0.35s ease;
 
     @include small {
       top: 220px;
@@ -170,7 +173,8 @@ aside {
         color: #999;
       }
 
-      &:hover, &.active {
+      &:hover,
+      &.active {
         color: white;
 
         &:before {
@@ -203,7 +207,10 @@ aside {
     visibility: hidden;
     opacity: 0;
     transform: translateX(50%);
-    transition: transform 0.35s ease, opacity 0.35s ease, visibility 0.35s ease;
+    transition:
+      transform 0.35s ease,
+      opacity 0.35s ease,
+      visibility 0.35s ease;
 
     @include small {
       display: none;
@@ -264,7 +271,9 @@ aside {
         font-weight: 700;
         opacity: 0;
         transform: translateX(5px);
-        transition: opacity 0.3s ease, transform 0.3s ease;
+        transition:
+          opacity 0.3s ease,
+          transform 0.3s ease;
         pointer-events: none;
       }
       svg {
@@ -306,8 +315,9 @@ ul {
 
 .project-container {
   position: relative;
-  
-  .item, .grid-sizer {
+
+  .item,
+  .grid-sizer {
     display: block;
     width: 20%;
     @include large {
@@ -451,7 +461,8 @@ ul {
 
       &.six {
         &:before {
-          background: url('../media/images/checkered-light-emboss.png') center center;
+          background: url('../media/images/checkered-light-emboss.png') center
+            center;
         }
       }
 
@@ -485,14 +496,17 @@ ul {
 
     &:hover {
       z-index: 10;
-      img, .icon {
+      img,
+      .icon {
         transition: transform 0.35s $ease-out-back;
         transform: scale(1.15);
       }
 
       .title {
         transform: scaleX(1);
-        transition: transform 0.2s $ease-out-cubic 0s, opacity 0.2s ease 0s;
+        transition:
+          transform 0.2s $ease-out-cubic 0s,
+          opacity 0.2s ease 0s;
         z-index: 1;
         h4 {
           opacity: 1;
@@ -508,7 +522,7 @@ ul {
 
   .memo {
     height: 30vh;
-  }  
+  }
 
   .project-iframe {
     position: fixed;
@@ -568,7 +582,7 @@ ul {
     .hljs {
       padding: 1.8rem;
       border-radius: 12px;
-      
+
       @include small {
         padding: 1rem 0.8rem;
       }
@@ -592,16 +606,19 @@ h1 {
   }
 }
 
-ul, li, p {
+ul,
+li,
+p {
   font-size: 1.4rem;
   line-height: 1.5em;
-  
+
   @include small {
     font-size: 1rem;
   }
 }
 
-ul, p {
+ul,
+p {
   margin-bottom: 2rem;
   @include small {
     margin-bottom: 1rem;
@@ -618,7 +635,8 @@ h3 {
   }
 }
 
-pre, code {
+pre,
+code {
   font-size: 1.4rem;
   margin-bottom: 2rem;
 
@@ -637,15 +655,18 @@ pre, code {
       padding: 0px 25px 30px;
     }
   }
-  
+
   a {
     display: inline-block;
     text-decoration: none;
     background: #eee;
     color: currentColor;
     border-bottom: 2px solid currentColor;
-    transition: background 0.35s ease, border 0.35s ease, color 0.35s ease;
-  
+    transition:
+      background 0.35s ease,
+      border 0.35s ease,
+      color 0.35s ease;
+
     &:hover {
       background: #333;
       border-bottom: 2px solid #333;

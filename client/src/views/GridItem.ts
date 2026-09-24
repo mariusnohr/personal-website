@@ -1,22 +1,28 @@
-import { router } from '../framework/App';
 import { TEMPLATE } from '../config/constants';
-import noteIcon from '../icons/memo.js';
+import noteIcon from '../icons/memo';
+import type { Project } from '../data/sitedata';
+
+interface GridItemOptions {
+  project: Project;
+  onCreated: (el: HTMLAnchorElement) => void;
+  onLoaded: (el: HTMLAnchorElement) => void;
+}
 
 export default class GridItem {
-  constructor({ project, target, onCreated, onLoaded }) {
-    const onClick = (evt, el) => {
+  constructor({ project, onCreated, onLoaded }: GridItemOptions) {
+    const onClick = (evt: MouseEvent) => {
       evt.preventDefault();
-      const href = el.getAttribute('href');
-      // router.navigate(href);
     };
 
-    onCreated(this.createItem(project, target, onClick, onLoaded));
-
-    // observer.observe(el);
+    onCreated(this.createItem(project, onClick, onLoaded));
   }
 
-  createItem(obj, target, onClick, onComplete) {
-    const { tags, id, image, title } = obj;
+  createItem(
+    obj: Project,
+    onClick: (evt: MouseEvent) => void,
+    onComplete: (el: HTMLAnchorElement) => void,
+  ): HTMLAnchorElement {
+    const { tags, id, title } = obj;
     const container = document.createElement('a');
     const classes = tags.map((tag) => tag.toLowerCase());
     container.classList.add('item', ...classes);
@@ -54,19 +60,19 @@ export default class GridItem {
     });
 
     // load image
-    if (image) {
+    if (obj.template === TEMPLATE.IFRAME) {
       const img = new Image();
       img.onload = () => {
         onComplete(container);
       };
-      img.src = image;
+      img.src = obj.image;
 
       contentContainer.appendChild(img);
       // manually override click listener since
       // the element is added after the image has loaded
       // thus the router doesn't detect it immediately
       container.addEventListener('click', (evt) => {
-        onClick(evt, container);
+        onClick(evt);
       });
     } else {
       onComplete(container);

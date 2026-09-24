@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import gsap from 'gsap';
-import { visibleHeightAtZDepth, visibleWidthAtZDepth, clamp } from './utils';
 
-import { router } from '../framework/App';
+import { clamp } from '../utils/math';
+import { visibleHeightAtZDepth, visibleWidthAtZDepth } from './utils';
 
 import vs from './shaders/logo.vert';
 import fs from './shaders/logo.frag';
@@ -20,11 +20,12 @@ const timeStep = {
   value: 1,
 };
 
-let ctx, canvas, mesh, mat, canvasTexture, cam, mScale, time, clicked, active;
+let mesh: THREE.Mesh;
+let cam: THREE.PerspectiveCamera;
+let mScale: THREE.Vector3;
+let active = true;
 
-const LOGO_IN_DELAY = 0.5;
-
-export function positionLogo(measure, animation = false) {
+export function positionLogo(measure: DOMRect, _animation = false): void {
   mesh.position.z = 0;
   // uniforms.opacity.value = 1;
 
@@ -35,7 +36,7 @@ export function positionLogo(measure, animation = false) {
   const pxToUnits2 = visibleHeight / window.innerHeight;
   const leftCol = pxToUnits * measure.width;
 
-  let aspect = window.innerWidth / window.innerHeight;
+  const aspect = window.innerWidth / window.innerHeight;
   let scale = clamp(aspect * 0.65, 0.6, 0.8);
 
   if (window.innerWidth <= 540) {
@@ -50,7 +51,7 @@ export function positionLogo(measure, animation = false) {
   mScale.copy(mesh.scale);
 }
 
-function mouseOverState() {
+function mouseOverState(): void {
   gsap.to(uniforms.darken, { duration: 0.6, value: 0.8 });
   gsap.to(timeStep, { duration: 0.6, value: 1.3 });
   gsap.to(uniforms.amp, { duration: 0.6, value: 0.25 });
@@ -62,8 +63,7 @@ function mouseOverState() {
   });
 }
 
-function mouseOutState(onComplete, isAnimating) {
-  const darken = active ? 0.8 : 1;
+function mouseOutState(onComplete: (active: boolean) => void): void {
   const amp = active ? 0.1 : 0;
 
   gsap.to(uniforms.darken, { duration: 0.6, value: 1 });
@@ -81,7 +81,7 @@ function mouseOutState(onComplete, isAnimating) {
   });
 }
 
-export function mouseover() {
+export function mouseover(): void {
   const mouseOver = uniforms.mouseover.value;
 
   if (!mouseOver) {
@@ -90,16 +90,16 @@ export function mouseover() {
   }
 }
 
-export function mouseout(onComplete, isAnimating, active) {
+export function mouseout(onComplete: (active: boolean) => void): void {
   const mouseOver = uniforms.mouseover.value;
 
   if (mouseOver) {
     uniforms.mouseover.value = false;
-    mouseOutState(onComplete, isAnimating);
+    mouseOutState(onComplete);
   }
 }
 
-export function toggleActive(toggle, cb) {
+export function toggleActive(toggle: boolean, cb?: () => void): void {
   active = toggle;
 
   if (!active) {
@@ -121,31 +121,31 @@ export function toggleActive(toggle, cb) {
   }
 }
 
-export function update(time) {
+export function update(): void {
   uniforms.uTime.value += 0.01 * timeStep.value;
 }
 
-export function getMesh() {
-  return mesh;
-}
-
-export function init({ scene, camera }) {
+export function init({
+  scene,
+  camera,
+}: {
+  scene: THREE.Scene;
+  camera: THREE.PerspectiveCamera;
+}): void {
   cam = camera;
 
-  const geom = new THREE.PlaneBufferGeometry(2, 2);
+  const geom = new THREE.PlaneGeometry(2, 2);
 
-  mat = new THREE.ShaderMaterial({
+  const material = new THREE.ShaderMaterial({
     vertexShader: vs,
     fragmentShader: fs,
     uniforms,
     transparent: true,
   });
 
-  mesh = new THREE.Mesh(geom, mat);
+  mesh = new THREE.Mesh(geom, material);
 
   mScale = new THREE.Vector3();
-  time = 0;
-  clicked = false;
   active = true;
 
   scene.add(mesh);

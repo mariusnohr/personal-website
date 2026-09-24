@@ -1,25 +1,37 @@
 import View from './View';
 import { subscribe } from './dispatcher';
+import type { RouteConfig, RouteMatch } from './types';
+
+type RenderCallback = (updateRefs?: boolean) => void;
 
 export default class DisplayManager {
-  constructor({ rootNode, onRender }) {
-    this.current = null;
-    this.next = null;
-    this.working = false;
-    this.currentNode = null;
-    this.view = null;
-    this.prevMatch = null;
+  current: RouteMatch | null = null;
+  next: RouteMatch | null = null;
+  working = false;
+  currentNode: ChildNode | null = null;
+  view: View | null = null;
+  prevMatch: RouteConfig | null = null;
 
+  onRender: RenderCallback;
+  rootNode: HTMLElement;
+
+  constructor({
+    rootNode,
+    onRender,
+  }: {
+    rootNode: HTMLElement;
+    onRender: RenderCallback;
+  }) {
     this.onRender = onRender;
     this.rootNode = rootNode;
   }
 
-  renderView(item) {
+  renderView(item: RouteConfig): void {
     this.rootNode.innerHTML = item.template;
     this.currentNode = this.rootNode.firstChild;
   }
 
-  show(obj) {
+  show(obj?: RouteMatch | null): void {
     // no routing matches
     if (!obj) return;
 
@@ -33,11 +45,11 @@ export default class DisplayManager {
         // set current
         this.current = obj;
         // get view constructor
-        let ViewComponent = item.component || View;
+        const ViewComponent = item.component || View;
         // render template
         this.renderView(item);
         // create view
-        this.view = new ViewComponent({ el: this.currentNode });
+        this.view = new ViewComponent({ el: this.currentNode as HTMLElement });
         this.onRender();
         // add view callback
         subscribe('showComplete', this.onShowComplete);
@@ -48,9 +60,9 @@ export default class DisplayManager {
         // just update the current one if routing is the same
         if (
           item.path === this.current.match.path ||
-          this.view.constructor === item.component
+          (this.view && this.view.constructor === item.component)
         ) {
-          this.view.paramChange(param);
+          this.view?.paramChange(param);
           this.onRender(false);
         } else {
           // hide current, set next
@@ -58,21 +70,21 @@ export default class DisplayManager {
           // add hide callback
           subscribe('hideComplete', this.onHideComplete);
           // hide view
-          this.view.hide();
+          this.view?.hide();
         }
       }
     }
   }
 
-  onShowComplete = () => {
+  onShowComplete = (): void => {
     this.working = false;
   };
 
-  onHideComplete = () => {
+  onHideComplete = (): void => {
     // set working to false
     this.working = false;
     // destroy current view
-    this.view.destroy();
+    this.view?.destroy();
     // null out current view
     this.view = null;
     this.current = null;
