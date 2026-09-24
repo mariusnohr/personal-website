@@ -1,22 +1,32 @@
-import gsap from 'gsap';
 import View from '../framework/View';
-import { animateStagger, randomInt } from '../utils/utils';
+import { animateStagger } from '../utils/utils';
+import { randomInt } from '../utils/math';
 
 const EMAIL = ['marius', 'nohr', '@', 'gmail', '.com'].join('');
 const PHONE = ['+47', '932', '44', '394'].join('');
 
-export default class ResumeView extends View {
-  constructor(options) {
-    super(options);
-    this.children = this.el.querySelector('.content').children;
-    this.phoneEl = this.el.querySelector('#phone');
-    this.emailEl = this.el.querySelector('#email');
+type ContactField = 'phoneEl' | 'emailEl';
 
-    const onLinkClick = (evt, type, label) => {
-      const el = evt.target;
+export default class ResumeView extends View {
+  children: HTMLCollection;
+  phoneEl: HTMLAnchorElement;
+  emailEl: HTMLAnchorElement;
+
+  constructor(options: { el: HTMLElement }) {
+    super(options);
+    this.children = (this.el.querySelector('.content') as HTMLElement).children;
+    this.phoneEl = this.el.querySelector('#phone') as HTMLAnchorElement;
+    this.emailEl = this.el.querySelector('#email') as HTMLAnchorElement;
+
+    const onLinkClick = (
+      evt: MouseEvent,
+      type: ContactField,
+      label: string,
+    ) => {
+      const el = evt.currentTarget as HTMLAnchorElement;
       if (el.textContent !== label) {
         evt.preventDefault();
-        this.showAlert(type, el.getAttribute('data-str'));
+        this.showAlert(type, el.getAttribute('data-str') ?? '');
       }
     };
 
@@ -28,7 +38,7 @@ export default class ResumeView extends View {
     });
   }
 
-  showAlert(type, label) {
+  showAlert(type: ContactField, label: string): void {
     const num1 = randomInt(2, 10);
     const num2 = randomInt(2, 10);
     const sum = num1 + num2;
@@ -39,12 +49,12 @@ export default class ResumeView extends View {
       If you answer correct, you will unlock my ${label}.
     `;
 
-    let answer = window.prompt(str);
+    const answer = window.prompt(str);
 
     if (answer) {
-      answer = parseInt(answer.trim(), 10);
+      const parsed = parseInt(answer.trim(), 10);
 
-      if (answer === sum) {
+      if (parsed === sum) {
         const text = type === 'phoneEl' ? PHONE : EMAIL;
         const href = type === 'phoneEl' ? `tel:${PHONE}` : `mailto:${EMAIL}`;
         this[type].textContent = text;
@@ -56,7 +66,7 @@ export default class ResumeView extends View {
     }
   }
 
-  show() {
+  override show(): void {
     animateStagger(this.children, {
       method: 'from',
       delayBetween: 0.1,
@@ -70,7 +80,7 @@ export default class ResumeView extends View {
     });
   }
 
-  hide() {
+  override hide(): void {
     animateStagger(this.children, {
       method: 'to',
       delayBetween: 0.08,

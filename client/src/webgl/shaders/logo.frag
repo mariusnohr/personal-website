@@ -1,4 +1,4 @@
-#pragma glslify: noise = require(./noise.glsl)
+#include noise.glsl
 
 varying vec2 vUv;
 uniform float uTime;

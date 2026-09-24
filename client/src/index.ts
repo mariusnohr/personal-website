@@ -6,43 +6,45 @@ import ResumeView from './views/ResumeView';
 import AboutView from './views/AboutView';
 import Sidebar from './views/Sidebar';
 
-// templates
-import mainTemplate from '../templates/main.html';
-import resumeTemplate from '../templates/resume.html';
-import aboutTemplate from '../templates/about.html';
-import notFoundTemplate from '../templates/404.html';
+// styles
+import '../styles/index.scss';
 
-// projects
-import { projects } from './data/sitedata';
+// templates
+import mainTemplate from '../templates/main.html?raw';
+import resumeTemplate from '../templates/resume.html?raw';
+import aboutTemplate from '../templates/about.html?raw';
+import notFoundTemplate from '../templates/404.html?raw';
 
 // webgl
 import * as webgl from './webgl/main';
 import * as logo from './webgl/logo';
 
-function init() {
+function init(): void {
   // init webgl
   webgl.init();
 
-  const resize = (evt, anim = false) => {
+  const resize = (anim = false): void => {
     // get sidebar width
-    const measures = document.querySelector('aside').getBoundingClientRect();
+    const measures = (
+      document.querySelector('aside') as HTMLElement
+    ).getBoundingClientRect();
 
     // position logo
     logo.positionLogo(measures, anim);
   };
 
-  resize(null, true);
+  resize(true);
 
-  window.addEventListener('resize', resize);
+  window.addEventListener('resize', () => resize());
 
   if (window.innerWidth <= 540) {
-    document.querySelector('.menu-btn').addEventListener('click', () => {
+    document.querySelector('.menu-btn')?.addEventListener('click', () => {
       Sidebar.toggleMobileNav();
     });
   }
 
   new App({
-    root: document.querySelector('#app'),
+    root: document.querySelector('#app') as HTMLElement,
     routes: {
       index: {
         className: 'home-page',
@@ -80,7 +82,7 @@ function init() {
       },
     },
     addRootClass: true,
-    onChange: (loc, action, match) => {
+    onChange: (loc) => {
       Sidebar.setActiveButton(loc.pathname);
     },
   });
@@ -89,11 +91,12 @@ function init() {
   Sidebar.setActiveButton(document.location.pathname);
 }
 
-function ready(callback) {
+function ready(callback: () => void): void {
   const state = document.readyState;
 
   if (state === 'complete' || state === 'interactive') {
-    return setTimeout(callback, 0);
+    setTimeout(callback, 0);
+    return;
   }
 
   document.addEventListener('DOMContentLoaded', function onLoad() {
@@ -103,6 +106,6 @@ function ready(callback) {
 
 ready(init);
 
-if (module.hot) {
-  module.hot.accept();
+if (import.meta.hot) {
+  import.meta.hot.accept();
 }

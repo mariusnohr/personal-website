@@ -1,32 +1,19 @@
 import * as THREE from 'three';
-// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import * as interactions from './interactions';
-// import { projects } from 'data/sitedata';
 import * as logo from './logo';
 
 const CAMERA_FOV = 75;
 const CAMERA_NEAR = 0.1;
 const CAMERA_FAR = 1000;
 
-let scene;
-let camera;
-let renderer;
-let controls;
-let width;
-let height;
-let mouse;
-let raycaster;
-let time;
-let isAnimating;
+let scene: THREE.Scene;
+let camera: THREE.PerspectiveCamera;
+let renderer: THREE.WebGLRenderer;
+let width = 0;
+let height = 0;
+let isAnimating = false;
 
-function animate() {
+function animate(): void {
   if (isAnimating) requestAnimationFrame(animate);
-
-  // update time
-  time += 0.01;
-
-  // // raycast
-  // raycast();
 
   // update logo
   logo.update();
@@ -35,42 +22,18 @@ function animate() {
   renderer.render(scene, camera);
 }
 
-function start() {
+function start(): void {
   if (!isAnimating) {
     isAnimating = true;
     animate();
   }
 }
 
-function stop() {
+function stop(): void {
   isAnimating = false;
 }
 
-// currently not in use
-function raycast() {
-  // do raycast
-  const mouseNDC = interactions.getMouse().ndc;
-  mouse.x = mouseNDC[0];
-  mouse.y = mouseNDC[1];
-
-  // update the picking ray with the camera and mouse position
-  raycaster.setFromCamera(mouse, camera);
-
-  // calculate objects intersecting the picking ray
-  const intersects = raycaster.intersectObject(logo.getMesh(), true);
-
-  if (intersects.length) {
-    logo.mouseover();
-    if (interactions.mouseDown()) {
-      logo.click();
-    }
-    return;
-  }
-
-  logo.mouseout();
-}
-
-function onResize() {
+function onResize(): void {
   width = window.innerWidth;
   height = window.innerHeight;
   camera.aspect = width / height;
@@ -78,7 +41,7 @@ function onResize() {
   renderer.setSize(width, height);
 }
 
-export function logoHover(toggle) {
+export function logoHover(toggle: boolean): void {
   if (toggle) {
     start();
     logo.mouseover();
@@ -86,22 +49,22 @@ export function logoHover(toggle) {
     // stop when out anim is complete
     logo.mouseout((active) => {
       if (!active) stop();
-    }, isAnimating);
+    });
   }
 }
 
-export function openProject() {
+export function openProject(): void {
   logo.toggleActive(false, () => {
     stop();
   });
 }
 
-export function closeProject() {
+export function closeProject(): void {
   start();
   logo.toggleActive(true);
 }
 
-export function init(location) {
+export function init(): void {
   // init all threejs stuff
   width = window.innerWidth;
   height = window.innerHeight;
@@ -111,12 +74,12 @@ export function init(location) {
     CAMERA_FOV,
     width / height,
     CAMERA_NEAR,
-    CAMERA_FAR
+    CAMERA_FAR,
   );
   camera.position.z = 5;
 
   renderer = new THREE.WebGLRenderer({
-    canvas: document.querySelector('#canvas'),
+    canvas: document.querySelector('#canvas') as HTMLCanvasElement,
     antialias: false,
     powerPreference: 'high-performance',
   });
@@ -127,19 +90,10 @@ export function init(location) {
 
   renderer.render(scene, camera);
 
-  mouse = new THREE.Vector2();
-  raycaster = new THREE.Raycaster();
-
   window.addEventListener('resize', onResize, false);
-
-  // init interactions
-  interactions.init();
 
   // init logo
   logo.init({ scene, camera });
-
-  // set time
-  time = 0;
 
   // start engine
   start();

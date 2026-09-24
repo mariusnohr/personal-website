@@ -1,28 +1,29 @@
 import gsap from 'gsap';
+
 import View from '../framework/View';
 import { animateStagger } from '../utils/utils';
 
-import { Vector2 } from 'three';
-
 export default class AboutView extends View {
-  constructor(options) {
+  children: HTMLCollection;
+
+  constructor(options: { el: HTMLElement }) {
     super(options);
-    this.children = this.el.querySelector('.content').children;
+    this.children = (this.el.querySelector('.content') as HTMLElement).children;
 
     const interactiveButtons = [
       this.el.querySelector('#interactivity'),
       this.el.querySelector('#physics'),
-    ];
+    ].filter((btn): btn is HTMLElement => btn instanceof HTMLElement);
 
     interactiveButtons.forEach((btn) => {
       btn.addEventListener('click', (evt) => {
         evt.preventDefault();
-        this.makeInteractiveButton(evt.target);
+        this.makeInteractiveButton(evt.currentTarget as HTMLElement);
       });
     });
   }
 
-  makeInteractiveButton(el) {
+  makeInteractiveButton(el: HTMLElement): void {
     const accThreshold = 0.02;
     const accThresholdLimit = 10;
     const origin = el.getAttribute('data-origin');
@@ -30,15 +31,15 @@ export default class AboutView extends View {
     let angVel = 0;
     let angAcc = 0;
     let currentAngle = 0;
-    let damping = 0.976;
+    const damping = 0.976;
     let falling = false;
     let accThresholdCount = 0;
-    let gravity = 0.02;
+    const gravity = 0.02;
     let vel = 0;
     let acc = 0;
     let y = 0;
-    let animID = null;
-    let margin = 200;
+    let animID = 0;
+    const margin = 200;
 
     // get current button page offset
     const offsetTop = el.getBoundingClientRect().top;
@@ -91,7 +92,7 @@ export default class AboutView extends View {
     animate();
   }
 
-  show() {
+  override show(): void {
     animateStagger(this.children, {
       method: 'from',
       delayBetween: 0.1,
@@ -105,7 +106,7 @@ export default class AboutView extends View {
     });
   }
 
-  hide() {
+  override hide(): void {
     animateStagger(this.children, {
       method: 'to',
       delayBetween: 0.08,

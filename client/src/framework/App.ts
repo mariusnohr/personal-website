@@ -1,12 +1,31 @@
+import type { Action, Location } from 'history';
+
 import Router from './Router';
 import DisplayManager from './DisplayManager';
+import type { RouteMatch, Routes } from './types';
 
-const noop = () => {};
+const noop = (): void => {};
 
-export let router;
+export let router: Router;
+
+interface AppOptions {
+  root?: HTMLElement;
+  routes: Routes;
+  addRootClass?: boolean;
+  onChange?: (location: Location, action: Action, match: RouteMatch) => void;
+}
 
 export default class App {
-  constructor(options) {
+  rootElement: HTMLElement;
+  onChangeCallback: (
+    location: Location,
+    action: Action,
+    match: RouteMatch,
+  ) => void;
+  addRootClass: boolean;
+  displayManager: DisplayManager;
+
+  constructor(options: AppOptions) {
     this.rootElement = options.root || this.createRootElement();
     this.onChangeCallback = options.onChange || noop;
     this.addRootClass = options.addRootClass || false;
@@ -32,7 +51,7 @@ export default class App {
     this.displayManager.show(currentItem);
   }
 
-  onRender = (updateRefs = true) => {
+  onRender = (updateRefs = true): void => {
     const currentLocation = router.getCurrentLocation();
     const currentItem = router.getMatchingRoute(currentLocation.pathname);
 
@@ -46,27 +65,27 @@ export default class App {
     if (this.addRootClass) {
       const { match } = currentItem;
       this.rootElement.className = '';
-      this.rootElement.classList.add(match.className);
+      if (match.className) this.rootElement.classList.add(match.className);
     }
   };
 
-  onRouteChange = (location, action) => {
-    let match = router.getMatchingRoute(location.pathname);
+  onRouteChange = (location: Location, action: Action): void => {
+    const match = router.getMatchingRoute(location.pathname);
     this.displayManager.show(match);
     this.onChangeCallback(location, action, match);
   };
 
-  createLink(el) {
+  createLink(el: Element): void {
     const href = el.getAttribute('href');
     el.addEventListener('click', (evt) => {
       evt.preventDefault();
-      router.navigate(href);
+      if (href) router.navigate(href);
     });
   }
 
-  createRootElement() {
-    let el = document.createElement('div');
-    document.appendChild(el);
+  createRootElement(): HTMLElement {
+    const el = document.createElement('div');
+    document.body.appendChild(el);
     return el;
   }
 }

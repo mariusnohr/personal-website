@@ -1,4 +1,5 @@
-import { TAG, TEMPLATE, ASSET_TYPE } from '../config/constants';
+import { ASSET_TYPE, TAG, TEMPLATE } from '../config/constants';
+import type { Tag } from '../config/constants';
 
 import image1 from '../../media/images/project1.jpg';
 import image2 from '../../media/images/project2.jpg';
@@ -20,19 +21,38 @@ import image17 from '../../media/images/17.jpg';
 import image18 from '../../media/images/18.jpg';
 import image19 from '../../media/images/19.jpg';
 
-import note1 from '../../notes/the-magic-easing.md';
+import note1 from '../../notes/the-magic-easing.md?raw';
 
-// TAGS
-//
-// SKETCH: 'Sketch',
-// MUSIC: 'Music',
-// MEMO: 'Memo',
-// GENERATIVE: 'Generative',
-// INTERACTIVE: 'Interactive',
-// PENPLOT: 'Penplot',
-// CASE_STUDY: 'Case Study',
+export interface ProjectBase {
+  id: string;
+  title: string;
+  tags: Tag[];
+  published_at: string;
+}
 
-export const projects = [
+export interface IframeProject extends ProjectBase {
+  image: string;
+  assetType: typeof ASSET_TYPE.IMAGE;
+  description: string;
+  template: typeof TEMPLATE.IFRAME;
+  background: string;
+  data: {
+    src: string;
+  };
+}
+
+export interface NoteProject extends ProjectBase {
+  template: typeof TEMPLATE.NOTE;
+  content: string;
+  thumbnail: {
+    theme: string;
+    background: string;
+  };
+}
+
+export type Project = IframeProject | NoteProject;
+
+export const projects: Project[] = [
   {
     id: 'blowing-cloth',
     image: image19,

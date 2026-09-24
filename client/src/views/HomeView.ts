@@ -8,45 +8,53 @@ import ProjectPage from './ProjectPage';
 import GridItem from './GridItem';
 
 import * as webgl from '../webgl/main';
+import type { RouteParam } from '../framework/types';
+
+/**
+ * Isotope exposes the active options object on the instance at runtime,
+ * which is how the transition duration gets updated once all items loaded.
+ * The shipped types don't declare it, so we add it here.
+ */
+type IsotopeWithOptions = Isotope & {
+  options: { transitionDuration?: number | string };
+};
 
 export default class HomeView extends View {
-  constructor(options) {
+  msnryContainer: HTMLElement;
+  iso: IsotopeWithOptions;
+  projectPage: ProjectPage | null = null;
+
+  constructor(options: { el: HTMLElement }) {
     super(options);
 
-    this.msnryContainer = this.el.querySelector('.masonry-container');
+    this.msnryContainer = this.el.querySelector(
+      '.masonry-container',
+    ) as HTMLElement;
 
-    // TODO: Maybe later
-    // let onIntersect = (entries, observer) => {
-    //   // console.log('intersecgted', evt);
-    //   // // observer
-    // };
-
-    // let observer = new IntersectionObserver(onIntersect, {
-    //   root: msnryContainer,
-    //   rootMargin: '0px',
-    //   threshold: 1.0,
-    // });
-
-    this.iso = new Isotope(this.msnryContainer, {
+    const isotopeOptions = {
       // options
       percentPosition: true,
       itemSelector: '.item',
       columnWidth: '.grid-sizer',
       stagger: 50,
       transitionDuration: 0,
-    });
+    };
 
-    this.createGridItems(this.msnryContainer, this.iso);
+    this.iso = new Isotope(
+      this.msnryContainer,
+      isotopeOptions,
+    ) as IsotopeWithOptions;
+
+    this.createGridItems(this.iso);
   }
 
-  createGridItems(target, isotope, observer) {
+  createGridItems(isotope: IsotopeWithOptions): void {
     let numLoaded = 0;
-    let tweens = [];
+    const tweens: gsap.core.Tween[] = [];
 
     projects.forEach((project, index) => {
       new GridItem({
         project,
-        target,
         // element is created
         onCreated: (el) => {
           isotope.insert(el);
@@ -59,23 +67,23 @@ export default class HomeView extends View {
               delay: 0.1 + index * 0.07,
               ease: 'expo.out',
               paused: true,
-            })
+            }),
           );
         },
         // element is loaded
-        onLoaded: (el) => {
+        onLoaded: () => {
           numLoaded++;
           if (numLoaded >= projects.length) {
             isotope.layout();
             tweens.forEach((tween) => tween.play());
-            this.iso.options.transitionDuration = '0.45s';
+            isotope.options.transitionDuration = '0.45s';
           }
         },
       });
     });
   }
 
-  paramChange(param) {
+  override paramChange(param?: RouteParam): void {
     const projectId = param?.projectId;
     const tag = param?.tag;
 
@@ -87,10 +95,12 @@ export default class HomeView extends View {
     }
 
     if (projectId) {
-      const project = projects.find((project) => project.id === projectId);
-      this.projectPage = new ProjectPage(project, this.el);
-      Sidebar.showSidebar(project);
-      webgl.openProject();
+      const project = projects.find((item) => item.id === projectId);
+      if (project) {
+        this.projectPage = new ProjectPage(project, this.el);
+        Sidebar.showSidebar(project);
+        webgl.openProject();
+      }
 
       gsap.to(this.msnryContainer, { duration: 0.45, opacity: 0 });
     } else {
@@ -108,12 +118,12 @@ export default class HomeView extends View {
     }
   }
 
-  show(param) {
+  override show(param?: RouteParam): void {
     this.paramChange(param);
     this.showComplete();
   }
 
-  hide() {
+  override hide(): void {
     gsap.to(this.el, {
       duration: 0.35,
       opacity: 0,

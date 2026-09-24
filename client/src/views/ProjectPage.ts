@@ -1,5 +1,8 @@
 import gsap from 'gsap';
+import { marked } from 'marked';
+
 import { TEMPLATE } from '../config/constants';
+import type { IframeProject, NoteProject, Project } from '../data/sitedata';
 
 import hljs from 'highlight.js/lib/core';
 import javascript from 'highlight.js/lib/languages/javascript';
@@ -8,28 +11,27 @@ import 'highlight.js/styles/hybrid.css';
 hljs.registerLanguage('javascript', javascript);
 
 export default class ProjectPage {
-  constructor(project, target) {
-    console.log('new item', project, target);
+  target: HTMLElement;
+  el!: HTMLElement;
 
-    const { template } = project;
+  constructor(project: Project, target: HTMLElement) {
     this.target = target;
 
-    switch (template) {
+    switch (project.template) {
       case TEMPLATE.IFRAME:
-        console.log('we have an iframe');
         this.createIframeTemplate(project, target);
         break;
 
       case TEMPLATE.NOTE:
-        console.log('we have a note');
         this.createNoteTemplate(project, target);
+        break;
 
       default:
         break;
     }
   }
 
-  createNoteTemplate(project, target) {
+  createNoteTemplate(project: NoteProject, target: HTMLElement): void {
     const { title, content } = project;
     const onAnimComplete = () => {
       const container = document.createElement('div');
@@ -42,16 +44,11 @@ export default class ProjectPage {
       container.appendChild(contentContainer);
 
       // add content
-      contentContainer.innerHTML = content;
+      contentContainer.innerHTML = marked.parse(content) as string;
       this.el.appendChild(container);
 
-      // setTimeout(() => {
-      //   hljs.initHighlightingOnLoad();
-      // }, 1000);
-      // console.log('yo');
-
       document.querySelectorAll('pre code').forEach((block) => {
-        hljs.highlightBlock(block);
+        hljs.highlightElement(block as HTMLElement);
       });
 
       gsap.from(container, { duration: 0.7, y: 15, opacity: 0 });
@@ -59,7 +56,8 @@ export default class ProjectPage {
 
       const iframes = contentContainer.querySelectorAll('iframe');
       iframes.forEach((iframe) => {
-        iframe.setAttribute('src', iframe.getAttribute('data-src'));
+        const src = iframe.getAttribute('data-src');
+        if (src) iframe.setAttribute('src', src);
       });
     };
 
@@ -75,9 +73,12 @@ export default class ProjectPage {
     });
   }
 
-  createIframeTemplate(project, target) {
+  createIframeTemplate(project: IframeProject, target: HTMLElement): void {
     const iframe = document.createElement('iframe');
-    iframe.src = `${project.data.src}/`;
+    // Point at the explicit entry file. Vite serves publicDir by exact path
+    // in dev (unlike the production static server), so a bare directory URL
+    // would fall back to the app shell instead of the experiment.
+    iframe.src = `${project.data.src}/index.html`;
 
     this.el = document.createElement('div');
     this.el.classList.add('project-iframe');
@@ -93,7 +94,7 @@ export default class ProjectPage {
       ease: 'power4.inOut',
       onComplete: () => {
         this.el.appendChild(iframe);
-        iframe.contentWindow.focus();
+        iframe.contentWindow?.focus();
         gsap.from(iframe, { duration: 1, opacity: 0 });
       },
     });
@@ -101,14 +102,14 @@ export default class ProjectPage {
     gsap.from(this.el, { duration: 0.45, opacity: 0 });
   }
 
-  onIframeResize = () => {
+  onIframeResize = (): void => {
     // measure target width
     const measure = this.target.getBoundingClientRect();
     this.el.style.width = `${measure.width}px`;
     this.el.style.height = `${window.innerHeight}px`;
   };
 
-  destroy() {
+  destroy(): void {
     window.removeEventListener('resize', this.onIframeResize);
 
     gsap.to(this.el, {
@@ -122,9 +123,7 @@ export default class ProjectPage {
       opacity: 0,
       delay: 0.3,
       onComplete: () => {
-        this.target.removeChild(this.el);
-        this.el = null;
-        this.target = null;
+        this.el.remove();
       },
     });
   }

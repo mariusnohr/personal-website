@@ -1,35 +1,34 @@
 import { trigger } from './dispatcher';
+import type { RouteParam } from './types';
 
 export default class View {
-  constructor(options) {
+  el: HTMLElement;
+
+  constructor(options: { el: HTMLElement }) {
     this.el = options.el;
   }
 
-  show() {
+  show(_param?: RouteParam): void {
     // do something before calling show complete
     this.showComplete();
   }
 
-  hide() {
+  hide(): void {
     // do something before calling hide complete
     this.hideComplete();
   }
 
-  paramChange() {}
+  paramChange(_param?: RouteParam): void {}
 
-  showComplete() {
+  showComplete(): void {
     trigger('showComplete');
   }
 
-  hideComplete() {
+  hideComplete(): void {
     trigger('hideComplete');
   }
 
-  destroy() {
-    let parent = this.el.parentNode;
-    while (parent.firstChild) {
-      parent.removeChild(parent.firstChild);
-    }
-    this.el = null;
+  destroy(): void {
+    this.el.remove();
   }
 }
