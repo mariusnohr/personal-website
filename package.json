@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/build-standalone.mjs",
     "preview": "vite preview",
     "clean": "rm -rf dist",
     "start": "tsx server/index.ts",

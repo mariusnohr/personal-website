@@ -5,13 +5,19 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   {
-    ignores: ['dist/**', 'static/**', 'node_modules/**', 'coverage/**'],
+    ignores: [
+      'dist/**',
+      '.next/**',
+      'static/**',
+      'node_modules/**',
+      'coverage/**',
+    ],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   prettier,
   {
-    files: ['**/*.{ts,js}'],
+    files: ['**/*.{ts,js,mjs,cjs}'],
     languageOptions: {
       globals: {
         ...globals.browser,
